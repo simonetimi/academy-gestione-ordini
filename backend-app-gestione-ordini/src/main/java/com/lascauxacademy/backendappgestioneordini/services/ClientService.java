@@ -17,15 +17,15 @@ public class ClientService {
 	private ClientRepository clientRepo;
 
 	@Transactional
-	private Client createClient(Client client) throws Exception {
-		if (clientRepo.exexistsByCompanyName(client.getCompanyName())) {
+	public Client createClient(Client client) throws Exception {
+		if (clientRepo.existsByCompanyName(client.getCompanyName())) {
 			throw new EntityExistsException("Company already exists!");
 		}
 		return clientRepo.save(client);
 	}
 
 	@Transactional
-	private Client modifyClient(Client client) throws Exception {
+	public Client modifyClient(Client client) throws Exception {
 		if (!clientRepo.existsById(client.getId())) {
 			throw new EntityNotFoundException("Client doesn't exist in database!");
 		}
@@ -34,7 +34,7 @@ public class ClientService {
 	}
 
 	@Transactional
-	private String deleteClient(Client client) throws Exception {
+	public String deleteClient(Client client) throws Exception {
 		if (!clientRepo.existsById(client.getId())) {
 			throw new EntityNotFoundException("Client doesn't exist in database!");
 		}

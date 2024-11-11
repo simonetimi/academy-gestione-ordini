@@ -24,7 +24,7 @@ public class Product {
     String name;
     
     @Column
-    private int vat;
+    private int vat = 22;
     
     @OneToMany(mappedBy = "product")
     @Column
