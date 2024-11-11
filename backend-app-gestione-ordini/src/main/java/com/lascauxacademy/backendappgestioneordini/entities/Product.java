@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
     @Column
-    private double price;
+    double price;
 
     @Column
-    private String name;
-
+    String name;
+    
     @Column
     private int vat = 22;
-
+    
     @OneToMany(mappedBy = "product")
     @Column
-    private List<OrderProduct> orderProducts;
+    private List<OrderProduct> orderProducts; 
 
 }
