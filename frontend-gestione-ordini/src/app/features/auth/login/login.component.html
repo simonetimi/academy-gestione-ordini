@@ -1,1 +1,22 @@
-<p>login works!</p>
+<div class="form-container">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" class="auth-form">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input formControlName="username" name="username" matInput />
+      <!--
+      <mat-error>Please enter a valid email address</mat-error>
+      -->
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        formControlName="password"
+        name="password"
+        type="password"
+        matInput
+      />
+    </mat-form-field>
+    <button mat-flat-button>Sign up</button>
+  </form>
+</div>

@@ -1,7 +1,46 @@
+@use "@angular/material" as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.form-field-density(-1);
 
-header, main {
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  color: #444444;
+}
+
+header,
+main {
   padding: 1rem;
+}
+
+header {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px) saturate(100%);
+}
+
+h1 {
+  font-size: 1.5rem !important;
+}
+
+h2 {
+  font-size: 1.3rem !important;
+}
+
+.form-container {
+  border: 1px solid #ffffff33;
+  padding: 2rem;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px) saturate(100%);
+  min-width: 300px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
 }

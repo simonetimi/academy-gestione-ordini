@@ -5,6 +5,8 @@ header {
   gap: 1rem;
   border-bottom: 1px solid lightblue;
 }
+
 h1 {
-  font-size: 1.5rem;
+  text-decoration: underline;
+  text-underline-offset: 8px;
 }
