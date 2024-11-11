@@ -1,5 +1,6 @@
 package com.lascauxacademy.backendappgestioneordini.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lascauxacademy.backendappgestioneordini.models.OrderState;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,11 +24,12 @@ public class Order {
     private OrderState state = OrderState.IN_PROGRESS;
 
     @OneToMany(mappedBy = "order")
+    @JsonManagedReference
     @Column(name = "products_list")
     private List<OrderProduct> orderProducts;
 
     @Column(name = "total_price")
-    private int totalPrice;
+    private double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "client_id")

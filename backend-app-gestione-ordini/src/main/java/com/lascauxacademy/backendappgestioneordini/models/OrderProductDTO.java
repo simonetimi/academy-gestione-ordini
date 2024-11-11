@@ -2,6 +2,7 @@ package com.lascauxacademy.backendappgestioneordini.models;
 
 public class OrderProductDTO {
     String productId;
+    
     int quantity;
 
     public String getProductId() {

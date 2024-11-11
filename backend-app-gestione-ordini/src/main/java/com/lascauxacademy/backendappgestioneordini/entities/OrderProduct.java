@@ -1,7 +1,7 @@
 package com.lascauxacademy.backendappgestioneordini.entities;
 
-import org.hibernate.annotations.ManyToAny;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,9 +30,11 @@ public class OrderProduct {
     private Product product;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "order_id")
     private Order order;
 
     @Column
     private int quantity;
+
 }

@@ -2,6 +2,7 @@ package com.lascauxacademy.backendappgestioneordini.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +45,7 @@ public class Client {
     @Column
     private String nation;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
