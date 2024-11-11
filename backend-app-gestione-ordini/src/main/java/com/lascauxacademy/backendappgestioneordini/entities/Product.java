@@ -15,7 +15,5 @@ public class Product {
     @Column
     String name;
 
-    // TODO vat enum
-
 
 }
