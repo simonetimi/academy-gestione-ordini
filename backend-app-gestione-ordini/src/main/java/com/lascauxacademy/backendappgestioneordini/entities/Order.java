@@ -19,15 +19,15 @@ public class Order {
     long id;
 
     @Column
-    OrderState state;
-    
+    private OrderState state;
+
     @OneToMany(mappedBy = "order")
     @Column(name = "products_list")
     private List<OrderProduct> orderProducts;
-    
+
     @Column(name = "total_price")
-    int totalPrice;
-    
+    private int totalPrice;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;

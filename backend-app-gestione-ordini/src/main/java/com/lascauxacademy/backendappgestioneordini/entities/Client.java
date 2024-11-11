@@ -25,26 +25,26 @@ import lombok.ToString;
 @ToString
 public class Client {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	@Column(name = "company_name")
-	private String companyName;
+    @Column(name = "company_name")
+    private String companyName;
 
-	@Column(name = "street_name")
-	private String streetName;
+    @Column(name = "street_name")
+    private String streetName;
 
-	@Column
-	private String city;
+    @Column
+    private String city;
 
-	@Column
-	private String province;
+    @Column
+    private String province;
 
-	@Column
-	private String nation;
-	
-	@OneToMany(mappedBy = "client")
-	List<Order> orders;
+    @Column
+    private String nation;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
 
 }
