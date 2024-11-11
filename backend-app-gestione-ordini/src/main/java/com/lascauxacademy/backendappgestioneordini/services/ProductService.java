@@ -30,7 +30,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void deleteProduct(long productId) throws EntityNotFoundException {
+    public void deleteProduct(String productId) throws EntityNotFoundException {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isEmpty()) throw new EntityNotFoundException("Id " + productId + " not found!");
         productRepository.deleteById(productId);
@@ -38,7 +38,7 @@ public class ProductService {
 
     @Transactional
     public Product updateProduct(Product p) throws EntityNotFoundException {
-        long productId = p.getId();
+        String productId = p.getId();
         Optional<Product> product = productRepository.findById(productId);
         if (product.isEmpty()) throw new EntityNotFoundException("Id " + productId + " not found!");
         return productRepository.save(p);

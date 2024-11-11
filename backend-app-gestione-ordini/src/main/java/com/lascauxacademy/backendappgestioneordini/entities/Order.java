@@ -15,11 +15,12 @@ import java.util.List;
 @Data
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
     @Column
-    private OrderState state;
+    @Enumerated(EnumType.STRING)
+    private OrderState state = OrderState.IN_PROGRESS;
 
     @OneToMany(mappedBy = "order")
     @Column(name = "products_list")

@@ -20,19 +20,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class OrderProduct {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private Product product;
 
-	@ManyToOne
-	@JoinColumn(name = "order_id")
-	private Order order;
-	
-	@Column
-	private int quantity;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @Column
+    private int quantity;
 }

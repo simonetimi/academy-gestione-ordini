@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
     @Column
     double price;
