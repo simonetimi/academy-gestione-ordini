@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,9 +20,15 @@ public class Order {
 
     @Column
     OrderState state;
-
-    // todo list aprodotti ordinati
-
+    
+    @OneToMany(mappedBy = "order")
+    @Column(name = "products_list")
+    private List<OrderProduct> orderProducts;
+    
     @Column(name = "total_price")
     int totalPrice;
+    
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 }

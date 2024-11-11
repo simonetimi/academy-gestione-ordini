@@ -1,21 +1,24 @@
 package com.lascauxacademy.backendappgestioneordini.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "clienti")
+@Table(name = "clients")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Cliente {
+public class Client {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +38,8 @@ public class Cliente {
 
 	@Column
 	private String nation;
+	
+	@OneToMany(mappedBy = "client")
+	List<Order> orders;
 
 }
