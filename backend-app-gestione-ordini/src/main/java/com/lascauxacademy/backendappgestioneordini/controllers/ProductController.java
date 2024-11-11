@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Product> addProduct(Product p) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product p) {
         Product product = productService.addProduct(p);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class ProductController {
 
 
     @PutMapping
-    public ResponseEntity<?> updateProduct(Product p) {
+    public ResponseEntity<?> updateProduct(@RequestBody Product p) {
         try {
             Product product = productService.updateProduct(p);
             return new ResponseEntity<>(product, HttpStatus.OK);

@@ -2,6 +2,7 @@ package com.lascauxacademy.backendappgestioneordini.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +23,13 @@ public class Product {
 
     @Column
     String name;
-    
+
     @Column
     private int vat = 22;
-    
+
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     @Column
-    private List<OrderProduct> orderProducts; 
+    private List<OrderProduct> orderProducts;
 
 }
