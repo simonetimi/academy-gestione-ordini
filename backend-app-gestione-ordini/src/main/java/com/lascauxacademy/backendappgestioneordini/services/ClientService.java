@@ -21,7 +21,8 @@ public class ClientService {
 		if (clientRepo.existsByCompanyName(client.getCompanyName())) {
 			throw new EntityExistsException("Company already exists!");
 		}
-		return clientRepo.save(client);
+		Client c = clientRepo.save(client);
+		return c;
 	}
 
 	@Transactional
@@ -34,12 +35,12 @@ public class ClientService {
 	}
 
 	@Transactional
-	public String deleteClient(Client client) throws Exception {
-		if (!clientRepo.existsById(client.getId())) {
+	public String deleteClient(long id) throws Exception {
+		if (!clientRepo.existsById(id)) {
 			throw new EntityNotFoundException("Client doesn't exist in database!");
 		}
 
-		clientRepo.delete(client);
+		clientRepo.deleteById(id);
 
 		return "Client deleted successfully!";
 	}
