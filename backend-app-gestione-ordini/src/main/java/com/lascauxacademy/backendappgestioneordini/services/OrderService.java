@@ -6,6 +6,8 @@ import com.lascauxacademy.backendappgestioneordini.entities.OrderProduct;
 import com.lascauxacademy.backendappgestioneordini.entities.Product;
 import com.lascauxacademy.backendappgestioneordini.models.OrderDTO;
 import com.lascauxacademy.backendappgestioneordini.models.OrderProductDTO;
+import com.lascauxacademy.backendappgestioneordini.models.OrderState;
+import com.lascauxacademy.backendappgestioneordini.models.StateDTO;
 import com.lascauxacademy.backendappgestioneordini.repositories.ClientRepository;
 import com.lascauxacademy.backendappgestioneordini.repositories.OrderProductRepository;
 import com.lascauxacademy.backendappgestioneordini.repositories.OrderRepository;
@@ -77,6 +79,22 @@ public class OrderService {
         order.setOrderProducts(orderProductList);
 
         //todo prezzo totale
+        return orderRepo.save(order);
+    }
+
+    @Transactional
+    public Order updateOrder(String orderId, StateDTO status) throws Exception {
+        Optional<Order> orderOptional = orderRepo.findById(orderId);
+        if (orderOptional.isEmpty()) throw new EntityNotFoundException("Order with id " + orderId + " not found.");
+        Order order = orderOptional.get();
+        System.out.println(status);
+        if (status.state.equals("COMPLETED")) {
+            order.setState(OrderState.COMPLETED);
+        } else if (status.state.equals("IN_PROGRESS")) {
+            order.setState(OrderState.IN_PROGRESS);
+        } else {
+            throw new Exception("Wrong status in your request.");
+        }
         return orderRepo.save(order);
     }
 
