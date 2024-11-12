@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { Product } from '../../../core/models/Product';
 import { ModalService } from '../../../core/services/modal.service';
 import { ProductModalComponent } from '../../../shared/components/modals/product-modal/product-modal.component';
 import { take } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 const ELEMENT_DATA_PLACEHOLDER: Product[] = [
   {
@@ -119,7 +122,18 @@ export class AdminComponent {
   displayedColumns: string[] = ['name', 'price', 'vat', 'edit'];
 
   // TODO PLACEHOLDER DATA!!!!!! PRENDI DAL SERVICE
-  dataSource = ELEMENT_DATA_PLACEHOLDER;
+  dataSource = new MatTableDataSource(ELEMENT_DATA_PLACEHOLDER);
+
+  @ViewChild(MatPaginator)
+  paginator = null;
+
+  @ViewChild(MatSort)
+  sort = null;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   onClickAdd() {
     this.#modalService.openModal(ProductModalComponent).subscribe({

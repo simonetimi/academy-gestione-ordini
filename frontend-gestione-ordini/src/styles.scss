@@ -72,9 +72,22 @@ h3 {
   }
 }
 
+// table
+
+.table-wrapper {
+  border-radius: 12px;
+  padding: 0.5rem;
+  background-color: #ffffffaa;
+  width: 100%;
+}
+
 table {
-  background: #ffffff33 !important;
-  backdrop-filter: blur(12px);
+  background-color: transparent !important;
+}
+
+mat-paginator {
+  border-radius: 12px;
+  background-color: #ffffffaa !important;
 }
 
 // modal
