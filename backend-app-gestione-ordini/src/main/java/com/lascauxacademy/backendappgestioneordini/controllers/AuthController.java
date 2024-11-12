@@ -1,5 +1,6 @@
 package com.lascauxacademy.backendappgestioneordini.controllers;
 
+import java.net.http.HttpClient;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -26,73 +27,32 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-	private RoleRepository roleRepository;
-	
-	@Autowired
-	private JwtUtil jwt;
-	
+
+	private final UserService userService;
+
+	public AuthController(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+
 	@PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestBody AuthDTO userAuthDto) throws Exception {
-		if(userAuthDto.getPassword().isEmpty()) {
-			throw new EntityNotFoundException("Password is needed!");
+	public ResponseEntity<?> signup(@RequestBody AuthDTO userAuthDto) {
+		try {
+			userService.signup(userAuthDto);
+			return ResponseEntity.ok("User registered successfully");
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		
-		userAuthDto.setPassword(passwordEncoder.encode(userAuthDto.getPassword()));
-		
-		if(!roleRepository.existsByCode("ROLE_OPERATOR")) {
-			throw new EntityNotFoundException("Role doesn't exist");
-		}
-
-		Role userRole = roleRepository.findByCode("ROLE_OPERATOR");
-		
-		User newUser = new User();
-		newUser.setEmail(userAuthDto.getEmail());
-		newUser.setPassword(userAuthDto.getPassword());
-		newUser.setUsername(userAuthDto.getUsername());
-		newUser.getRoles().add(userRole);
-
-		userService.insertUser(newUser);
-		return ResponseEntity.ok("User registered successfully");
-		
 	}
 
 	@PostMapping("/signin")
-	public ResponseEntity<?> signin(@RequestBody AuthDTO loginRequest) throws Exception {
-		
-		if(!userRepository.existsByUsername(loginRequest.getUsername())) {
-			throw new EntityNotFoundException("User doesn't exist!");
+	public ResponseEntity<?> signin(@RequestBody AuthDTO loginRequest) {
+		try {
+			return ResponseEntity.ok(userService.signin(loginRequest));
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
 		}
-		
-		User user = userRepository.findByUsername(loginRequest.getUsername());
 
-		if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-			
-			String token = jwt.generateToken(user.getUsername());
-			Object[] roles = user.getRoles().toArray();
-			loginRequest.setId(user.getId());
-			loginRequest.setToken(token);
-			loginRequest.setEmail(user.getEmail());
-			loginRequest.setPassword(null);
-			loginRequest.setUsername(user.getUsername());
-			loginRequest.setTokenExpireDate(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10));
-			loginRequest.setRole(((Role) roles[0]).getCode());
-		
-			
-			return ResponseEntity.ok(loginRequest);
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-		}
 	}
 
 }

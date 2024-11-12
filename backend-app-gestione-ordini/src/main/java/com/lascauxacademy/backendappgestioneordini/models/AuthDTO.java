@@ -1,8 +1,12 @@
 package com.lascauxacademy.backendappgestioneordini.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lascauxacademy.backendappgestioneordini.entities.Role;
@@ -34,6 +38,8 @@ public class AuthDTO {
 	private String token;
 
 	private Date tokenExpireDate;
+	
+	private List<GrantedAuthority> authorities = new ArrayList<>();
 	
 	private String role;
 }
