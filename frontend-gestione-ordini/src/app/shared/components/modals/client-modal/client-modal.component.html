@@ -1,0 +1,32 @@
+<div class="modal-container">
+  <form
+    class="modal-form"
+    [formGroup]="clientForm"
+    (ngSubmit)="onClientSubmit()"
+  >
+    <mat-form-field>
+      <mat-label>Ragione sociale</mat-label>
+      <input formControlName="companyName" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Indirizzo</mat-label>
+      <input formControlName="streetName" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Città</mat-label>
+      <input formControlName="city" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Provincia</mat-label>
+      <input formControlName="province" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Nazione</mat-label>
+      <input formControlName="nation" matInput />
+    </mat-form-field>
+
+    <button mat-flat-button>
+      {{ isEditMode ? "Modifica" : "Aggiungi" }} cliente
+    </button>
+  </form>
+</div>

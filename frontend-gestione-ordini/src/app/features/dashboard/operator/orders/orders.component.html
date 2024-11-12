@@ -1,0 +1,56 @@
+<h2>Ordini</h2>
+<button class="add-button" mat-flat-button>Aggiungi ordine</button>
+<div class="table-wrapper mat-elevation-z2">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="companyName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="streetName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.price | currency: "EUR" }}
+      </td>
+    </ng-container>
+
+    <!-- Vat Column -->
+    <ng-container matColumnDef="city">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
+      <td mat-cell *matCellDef="let product">{{ product.vat }}</td>
+    </ng-container>
+
+    <!-- Vat Column -->
+    <ng-container matColumnDef="provinceAndNation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
+      <td mat-cell *matCellDef="let product">{{ product.vat }}</td>
+    </ng-container>
+
+    <!-- Edit Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Modifica</th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          (click)="onClickEdit(product)"
+          mat-mini-fab
+          aria-label="Modifica prodotto"
+          class="icon-button"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<mat-paginator
+  class="mat-elevation-z2"
+  [pageSizeOptions]="[5, 10]"
+  showFirstLastButtons
+  aria-label="Seleziona pagina ordini"
+>
+</mat-paginator>

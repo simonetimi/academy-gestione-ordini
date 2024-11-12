@@ -7,7 +7,7 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   #authService: AuthService = inject(AuthService);
 
   signupForm = new FormGroup({
@@ -25,9 +25,6 @@ export class SignupComponent implements OnInit {
     this.#authService.userLogin.next({
       username: this.signupForm.controls.username.value!,
       password: this.signupForm.controls.password.value!,
-    })
-  }
-  ngOnInit() {
-    console.log(this.signupForm.value);
+    });
   }
 }

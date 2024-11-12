@@ -5,7 +5,7 @@
 
 - [x] Modulo dashboard: componenti per admin / componenti per altro ruolo
 
-- [ ] Logout: bottone, logica auth
+- [x] Logout: bottone, logica auth
 
 - [ ] Service state per: prodotti, ordini, clienti
 - [ ] Service chiamate http
@@ -17,7 +17,7 @@
 
 
 - [ ] Dashboard admin: prodotti (componente fatto, da fare con lo state)
-- [ ] Dashboard operatore: clienti ()
+- [ ] Dashboard operatore: clienti
 - [ ] Dashboard operatore: ordini
 
 
