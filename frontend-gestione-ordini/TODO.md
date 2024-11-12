@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Login e Sign-up reactive form
+- [x] Login e Sign-up reactive form
 
 
 - [ ] Modulo dashboard: componenti per admin / componenti per altro ruolo

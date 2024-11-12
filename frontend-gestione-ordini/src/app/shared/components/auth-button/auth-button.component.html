@@ -1,1 +1,5 @@
-<button mat-flat-button>Auth</button>
+@if (url === "/auth/login") {
+  <a mat-flat-button [routerLink]="['/auth', 'signup']"> Signup </a>
+} @else if (url === "/auth/signup") {
+  <a mat-flat-button [routerLink]="['/auth', 'login']"> Login </a>
+}
