@@ -5,8 +5,9 @@
 
 - [x] Modulo dashboard: componenti per admin / componenti per altro ruolo
 
+- [ ] Logout: bottone, logica auth
 
-- [ ] Service state
+- [ ] Service state per: prodotti, ordini, clienti
 - [ ] Service chiamate http
 - [ ] Persistance della sessione (JWT/role)
 
@@ -15,7 +16,11 @@
 - [ ] Rendering componenti condizionale a seconda del ruolo
 
 
-- [ ] Dettaglio componenti per gestire operazioni CRUD
+- [ ] Dashboard admin: prodotti (componente fatto, da fare con lo state)
+- [ ] Dashboard operatore: clienti ()
+- [ ] Dashboard operatore: ordini
+
+
 - [ ] Dark mode (optional)
 
 

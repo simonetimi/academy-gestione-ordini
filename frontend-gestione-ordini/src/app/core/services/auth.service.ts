@@ -3,11 +3,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/User';
 import { HttpService } from './http.service';
 import { PersistenceService } from './persistence.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Route, Router } from '@angular/router';
-import {UserLogin} from '../models/UserLogin';
+import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { UserLogin } from '../models/UserLogin';
 @Injectable({
   providedIn: 'root',
 })
@@ -56,7 +55,7 @@ export class AuthService {
           this.#notificationService.sendSuccessNotification(
             `Registrazione avvenuta con successo!`,
           );
-            this.#router.navigate(['auth','login']);
+          this.#router.navigate(['auth', 'login']);
         }
       },
       error: (err) => {
@@ -66,5 +65,15 @@ export class AuthService {
         );
       },
     });
+  }
+
+  logout() {
+    // elimina l'utente dal behavior subject, local storage ed esegue redirect a login
+    this.#persistenceService.removeUser();
+    this.#user$.next(null);
+    this.#notificationService.sendSuccessNotification(
+      `Logout avvenuto con successo!`,
+    );
+    this.#router.navigate(['auth', 'login']);
   }
 }

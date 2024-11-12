@@ -15,4 +15,8 @@ export class PersistenceService {
     if (!stringifiedUser) return null;
     return JSON.parse(stringifiedUser);
   }
+
+  removeUser() {
+    localStorage.removeItem('user');
+  }
 }
