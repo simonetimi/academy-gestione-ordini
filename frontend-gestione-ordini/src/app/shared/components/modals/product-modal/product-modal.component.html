@@ -1,0 +1,16 @@
+<div class="modal-container">
+  <form class="modal-form" [formGroup]="productForm">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input formControlName="name" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Prezzo</mat-label>
+      <input formControlName="price" type="tel" matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>IVA</mat-label>
+      <input formControlName="vat" type="tel" matInput />
+    </mat-form-field>
+  </form>
+</div>

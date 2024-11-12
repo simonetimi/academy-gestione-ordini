@@ -4,9 +4,10 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 import { RouterLink } from '@angular/router';
+import { ProductModalComponent } from './components/modals/product-modal/product-modal.component';
 
 @NgModule({
-  declarations: [AuthButtonComponent],
+  declarations: [AuthButtonComponent, ProductModalComponent],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule, RouterLink],
   exports: [
     MaterialModule,

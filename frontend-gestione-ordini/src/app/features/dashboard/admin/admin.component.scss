@@ -1,0 +1,16 @@
+:host {
+  width: 100%;
+  height: 82vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+table {
+  min-width: 60%;
+}
+
+button {
+  transform: scale(0.8);
+}

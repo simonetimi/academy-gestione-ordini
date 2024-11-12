@@ -9,7 +9,7 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  background: linear-gradient(135deg, #d8d8da 0%, #c3cfe2 100%);
   color: #444444;
 }
 
@@ -38,6 +38,7 @@ h3 {
   color: #ffffff;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
 }
+// auth forms
 
 .form-container {
   padding: 2rem;
@@ -50,6 +51,43 @@ h3 {
 }
 
 .auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+// materiar snackbar
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: rgba(69, 255, 69, 0.43);
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  &.error-snackbar {
+    --mdc-snackbar-container-color: rgba(255, 0, 0, 0.66);
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}
+
+table {
+  background: #ffffff33 !important;
+  backdrop-filter: blur(12px);
+}
+
+// modal
+
+.modal-container {
+  min-width: 500px;
+  padding: 2rem;
+  @media (max-width: 500px) {
+    min-width: 100vw;
+  }
+}
+
+.modal-form {
   display: flex;
   flex-direction: column;
 }
