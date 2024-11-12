@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   #authService: AuthService = inject(AuthService);
 
   signupForm = new FormGroup({
@@ -22,5 +22,8 @@ export class SignupComponent {
       this.signupForm.controls.email.value!,
       this.signupForm.controls.password.value!,
     );
+  }
+  ngOnInit() {
+    console.log(this.signupForm.value);
   }
 }

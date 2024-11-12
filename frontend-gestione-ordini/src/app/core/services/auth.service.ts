@@ -50,13 +50,14 @@ export class AuthService {
 
   signup(username: string, email: string, password: string) {
     this.#httpService.signup(username, email, password).subscribe({
-      next: (_value: string) => {
+      next: (_value: any) => {
         this.#router.navigate(['/', 'auth', 'login']);
         this.#notificationService.sendNotification(
           `Registrazione avvenuta con successo!`,
         );
       },
       error: (err) => {
+        console.log(err);
         this.#notificationService.sendNotification(
           `Errore registrazione: ${err}`,
         );

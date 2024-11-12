@@ -1,18 +1,23 @@
 <div class="form-container">
   <h2>Registrazione</h2>
-  <form class="auth-form">
+  <form class="auth-form" (ngSubmit)="signup()" [formGroup]="signupForm">
     <mat-form-field>
       <mat-label>Username</mat-label>
-      <input name="username" matInput />
+      <input name="username" matInput formControlName="username" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input name="email" type="email" matInput />
+      <input name="email" type="email" matInput formControlName="email" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input name="password" type="password" matInput />
+      <input
+        name="password"
+        type="password"
+        matInput
+        formControlName="password"
+      />
     </mat-form-field>
-    <button mat-flat-button (click)="signup()">Registrati</button>
+    <button mat-flat-button>Registrati</button>
   </form>
 </div>

@@ -20,6 +20,9 @@ export class HttpService {
   }
 
   signup(username: string, email: string, password: string) {
+    let body = {
+      responseType: 'text',
+    };
     return this.#httpClient.post<string>('http://localhost:8080/auth/signup', {
       username,
       email,
