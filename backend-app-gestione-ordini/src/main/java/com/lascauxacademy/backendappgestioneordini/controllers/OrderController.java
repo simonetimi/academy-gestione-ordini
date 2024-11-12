@@ -7,20 +7,22 @@ import com.lascauxacademy.backendappgestioneordini.models.StateDTO;
 import com.lascauxacademy.backendappgestioneordini.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/orders")
 public class OrderController {
 
 
-    OrderService orderService;
+    private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
     @PostMapping("")
+    //@PreAuthorize("hasRole('OPERATOR')")
     public ResponseEntity<?> addOrder(@RequestBody OrderDTO orderDTO) {
         try {
             Order order = orderService.postOrder(orderDTO);

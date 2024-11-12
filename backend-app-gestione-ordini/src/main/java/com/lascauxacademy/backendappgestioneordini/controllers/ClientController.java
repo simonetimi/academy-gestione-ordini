@@ -17,7 +17,7 @@ import com.lascauxacademy.backendappgestioneordini.services.ClientService;
 @RequestMapping("/client")
 public class ClientController {
 
-    private ClientService clientService;
+    private final ClientService clientService;
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;

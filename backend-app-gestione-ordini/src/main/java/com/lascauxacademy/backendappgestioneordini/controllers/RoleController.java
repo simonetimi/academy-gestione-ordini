@@ -16,8 +16,14 @@ import com.lascauxacademy.backendappgestioneordini.services.RoleService;
 @RequestMapping("/role")
 public class RoleController {
 	
-	@Autowired
-	private RoleService roleService;
+	private final RoleService roleService;
+	
+	public RoleController(RoleService roleService) {
+		super();
+		this.roleService = roleService;
+	}
+
+
 
 	@PostMapping("")
 	public ResponseEntity<?> addRole(@RequestBody Role role){

@@ -14,15 +14,19 @@ import jakarta.transaction.Transactional;
 @Service
 public class RoleService {
 
-	@Autowired
-	private RoleRepository roleRepository;
-	
+	private final RoleRepository roleRepository;
+
+	public RoleService(RoleRepository roleRepository) {
+		super();
+		this.roleRepository = roleRepository;
+	}
+
 	@Transactional
 	public Role addRole(Role role) throws Exception {
-		if(roleRepository.existsByCode(role.getCode())){
+		if (roleRepository.existsByCode(role.getCode())) {
 			throw new EntityExistsException("Role already exists by provided code!");
 		}
-		
+
 		return roleRepository.save(role);
 	}
 }

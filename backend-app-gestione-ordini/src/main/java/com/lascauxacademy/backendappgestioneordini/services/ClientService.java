@@ -13,36 +13,40 @@ import jakarta.transaction.Transactional;
 @Service
 public class ClientService {
 
-    @Autowired
-    private ClientRepository clientRepo;
+	private final ClientRepository clientRepo;
 
-    @Transactional
-    public Client createClient(Client client) throws Exception {
-        if (clientRepo.existsByCompanyName(client.getCompanyName())) {
-            throw new EntityExistsException("Company already exists!");
-        }
-        Client c = clientRepo.save(client);
-        return c;
-    }
+	public ClientService(ClientRepository clientRepo) {
+		super();
+		this.clientRepo = clientRepo;
+	}
 
-    @Transactional
-    public Client modifyClient(Client client) throws Exception {
-        if (!clientRepo.existsById(client.getId())) {
-            throw new EntityNotFoundException("Client doesn't exist in database!");
-        }
+	@Transactional
+	public Client createClient(Client client) throws Exception {
+		if (clientRepo.existsByCompanyName(client.getCompanyName())) {
+			throw new EntityExistsException("Company already exists!");
+		}
+		Client c = clientRepo.save(client);
+		return c;
+	}
 
-        return clientRepo.save(client);
-    }
+	@Transactional
+	public Client modifyClient(Client client) throws Exception {
+		if (!clientRepo.existsById(client.getId())) {
+			throw new EntityNotFoundException("Client doesn't exist in database!");
+		}
 
-    @Transactional
-    public String deleteClient(String id) throws Exception {
-        if (!clientRepo.existsById(id)) {
-            throw new EntityNotFoundException("Client doesn't exist in database!");
-        }
+		return clientRepo.save(client);
+	}
 
-        clientRepo.deleteById(id);
+	@Transactional
+	public String deleteClient(String id) throws Exception {
+		if (!clientRepo.existsById(id)) {
+			throw new EntityNotFoundException("Client doesn't exist in database!");
+		}
 
-        return "Client deleted successfully!";
-    }
+		clientRepo.deleteById(id);
+
+		return "Client deleted successfully!";
+	}
 
 }
