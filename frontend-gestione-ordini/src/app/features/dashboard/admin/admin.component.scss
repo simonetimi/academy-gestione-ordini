@@ -1,0 +1,17 @@
+:host {
+  min-width: 60%;
+  height: 82vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+button {
+  transform: scale(0.8);
+}
+
+.add-button {
+  align-self: start !important;
+}

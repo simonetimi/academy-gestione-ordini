@@ -1,10 +1,9 @@
 ## TODO
 
-- [ ] Login e Sign-up reactive form
+- [x] Login e Sign-up reactive form
 
 
-- [ ] Modulo dashboard: componenti per admin / componenti per altro ruolo
-- [ ]
+- [x] Modulo dashboard: componenti per admin / componenti per altro ruolo
 
 
 - [ ] Service state
@@ -17,3 +16,10 @@
 
 
 - [ ] Dettaglio componenti per gestire operazioni CRUD
+- [ ] Dark mode (optional)
+
+
+
+dashboard admin
+- [ ] tabella crud prodotti
+- [ ] pagination

@@ -1,5 +1,5 @@
 header {
-  height: 10vh;
+  height: 5vh;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -17,4 +17,11 @@ h1 {
 
 .title:hover {
   transform: scale(1.07);
+}
+
+.buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
