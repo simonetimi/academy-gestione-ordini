@@ -2,51 +2,49 @@
 <button class="add-button" mat-flat-button (click)="onClickAdd()">
   Aggiungi prodotto
 </button>
-<table
-  mat-table
-  [dataSource]="dataSource"
-  class="mat-elevation-z8 demo-table"
-  matSort
->
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-    <td mat-cell *matCellDef="let product">{{ product.name }}</td>
-  </ng-container>
+<div class="table-wrapper mat-elevation-z2">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+    </ng-container>
 
-  <!-- Price Column -->
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
-    <td mat-cell *matCellDef="let product">
-      {{ product.price | currency: "EUR" }}
-    </td>
-  </ng-container>
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.price | currency: "EUR" }}
+      </td>
+    </ng-container>
 
-  <!-- Vat Column -->
-  <ng-container matColumnDef="vat">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
-    <td mat-cell *matCellDef="let product">{{ product.vat + "%" }}</td>
-  </ng-container>
+    <!-- Vat Column -->
+    <ng-container matColumnDef="vat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
+      <td mat-cell *matCellDef="let product">{{ product.vat + "%" }}</td>
+    </ng-container>
 
-  <!-- Edit Column -->
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef>Modifica</th>
-    <td mat-cell *matCellDef="let product">
-      <button
-        (click)="onClickEdit(product)"
-        mat-mini-fab
-        aria-label="Modifica prodotto"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <!-- Edit Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Modifica</th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          (click)="onClickEdit(product)"
+          mat-mini-fab
+          aria-label="Modifica prodotto"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
 <mat-paginator
-  [pageSizeOptions]="[5, 10, 15]"
+  class="mat-elevation-z2"
+  [pageSizeOptions]="[5, 10]"
   showFirstLastButtons
   aria-label="Seleziona pagina prodotti"
 >
