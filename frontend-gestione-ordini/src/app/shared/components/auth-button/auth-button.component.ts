@@ -25,6 +25,6 @@ export class AuthButtonComponent implements OnInit {
   }
 
   onLogout() {
-    // this.#authService
+    this.#authService.logout();
   }
 }
