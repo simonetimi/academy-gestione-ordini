@@ -23,6 +23,90 @@ const ELEMENT_DATA_PLACEHOLDER: Product[] = [
     price: 5,
     vat: 10,
   },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
+  {
+    id: 'p3',
+    name: 'Prodotto test 3',
+    price: 5,
+    vat: 10,
+  },
 ];
 
 @Component({
@@ -36,6 +120,14 @@ export class AdminComponent {
 
   // TODO PLACEHOLDER DATA!!!!!! PRENDI DAL SERVICE
   dataSource = ELEMENT_DATA_PLACEHOLDER;
+
+  onClickAdd() {
+    this.#modalService.openModal(ProductModalComponent).subscribe({
+      next: (result) => console.log(result),
+      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
+      //  result ? this.#stateService.addColleague(result) : null,
+    });
+  }
 
   onClickEdit(product: Product) {
     this.#modalService.openModal(ProductModalComponent, product).subscribe({

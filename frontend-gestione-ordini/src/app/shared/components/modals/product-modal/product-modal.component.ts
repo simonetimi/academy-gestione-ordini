@@ -8,32 +8,28 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './product-modal.component.html',
   styleUrl: './product-modal.component.scss',
 })
-export class ProductModalComponent implements OnInit {
+export class ProductModalComponent {
   #dialogRef = inject(MatDialogRef);
-  productsData: Product | null = inject(MAT_DIALOG_DATA);
+  productData: Product | null = inject(MAT_DIALOG_DATA);
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.productsData);
-    const product = this.productsData;
-    if (product) {
-      this.productForm.setValue({
-        name: product.name,
-        price: product.price,
-        vat: product.vat,
-      });
-    }
-  }
-
   // se product esiste, isEditMode è true. se product non esiste, questo valore è false
-  isEditMode = !!this.productsData;
+  isEditMode = !!this.productData;
 
   productForm = new FormGroup({
-    name: new FormControl(this.productsData?.name || ''),
-    price: new FormControl(this.productsData?.price || ''),
-    vat: new FormControl(this.productsData?.vat || ''),
+    name: new FormControl<string>(this.productData?.name || ''),
+    price: new FormControl<number>(this.productData?.price || 0),
+    vat: new FormControl<number>(this.productData?.vat || 22),
   });
 
-  // TODO ritorna alla componente che l'ha aperto this.dialogRef.close(product);
+  onProductSubmit() {
+    const product: Product = {
+      id: this.productData?.id,
+      name: this.productForm.controls.name.value as string,
+      price: this.productForm.controls.price.value as number,
+      vat: this.productForm.controls.vat.value as number,
+    };
+    this.#dialogRef.close(product);
+  }
 }

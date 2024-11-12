@@ -1,5 +1,9 @@
 <div class="modal-container">
-  <form class="modal-form" [formGroup]="productForm">
+  <form
+    class="modal-form"
+    [formGroup]="productForm"
+    (ngSubmit)="onProductSubmit()"
+  >
     <mat-form-field>
       <mat-label>Nome</mat-label>
       <input formControlName="name" matInput />
@@ -12,5 +16,8 @@
       <mat-label>IVA</mat-label>
       <input formControlName="vat" type="tel" matInput />
     </mat-form-field>
+    <button mat-flat-button>
+      {{ isEditMode ? "Modifica" : "Aggiungi" }} prodotto
+    </button>
   </form>
 </div>

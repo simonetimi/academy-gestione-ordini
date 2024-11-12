@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [],
@@ -19,6 +21,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     MatTableModule,
     MatTabsModule,
+    MatPaginator,
+    MatSortModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -28,6 +32,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatIconModule,
     MatTableModule,
     MatTabsModule,
+    MatPaginator,
+    MatSortModule,
   ],
 })
 export class MaterialModule {}

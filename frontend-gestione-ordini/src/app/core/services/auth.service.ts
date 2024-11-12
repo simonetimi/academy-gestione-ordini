@@ -5,6 +5,8 @@ import { HttpService } from './http.service';
 import { PersistenceService } from './persistence.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Route, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class AuthService {
   #httpService: HttpService = inject(HttpService);
   #persistenceService: PersistenceService = inject(PersistenceService);
   #notificationService: NotificationService = inject(NotificationService);
+  #router: Router = inject(Router);
 
   constructor() {
     // check if user exists
@@ -48,6 +51,7 @@ export class AuthService {
   signup(username: string, email: string, password: string) {
     this.#httpService.signup(username, email, password).subscribe({
       next: (_value: string) => {
+        this.#router.navigate(['/', 'auth', 'login']);
         this.#notificationService.sendNotification(
           `Registrazione avvenuta con successo!`,
         );
