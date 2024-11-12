@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { User } from '../models/User';
 
 @Injectable({
@@ -20,13 +20,18 @@ export class HttpService {
   }
 
   signup(username: string, email: string, password: string) {
-    let body = {
-      responseType: 'text',
-    };
-    return this.#httpClient.post<string>('http://localhost:8080/auth/signup', {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.#httpClient.post('http://localhost:8080/auth/signup', {
       username,
       email,
       password,
+    },{
+      headers: headers,
+      observe: 'response',
+      responseType: 'text'
     });
   }
 }

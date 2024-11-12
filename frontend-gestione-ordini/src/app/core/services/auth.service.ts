@@ -7,12 +7,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificationService } from './notification.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Route, Router } from '@angular/router';
-
+import {UserLogin} from '../models/UserLogin';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   #user$ = new BehaviorSubject<User | null>(null);
+  userLogin = new BehaviorSubject<UserLogin | null>(null);
   #httpService: HttpService = inject(HttpService);
   #persistenceService: PersistenceService = inject(PersistenceService);
   #notificationService: NotificationService = inject(NotificationService);
@@ -50,15 +51,17 @@ export class AuthService {
 
   signup(username: string, email: string, password: string) {
     this.#httpService.signup(username, email, password).subscribe({
-      next: (_value: any) => {
-        this.#router.navigate(['/', 'auth', 'login']);
-        this.#notificationService.sendNotification(
-          `Registrazione avvenuta con successo!`,
-        );
+      next: (_value: HttpResponse<any>) => {
+        if (_value.status === 200) {
+          this.#notificationService.sendSuccessNotification(
+            `Registrazione avvenuta con successo!`,
+          );
+            this.#router.navigate(['auth','login']);
+        }
       },
       error: (err) => {
         console.log(err);
-        this.#notificationService.sendNotification(
+        this.#notificationService.sendErrorNotification(
           `Errore registrazione: ${err}`,
         );
       },

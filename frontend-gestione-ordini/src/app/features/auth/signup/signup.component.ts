@@ -22,6 +22,10 @@ export class SignupComponent implements OnInit {
       this.signupForm.controls.email.value!,
       this.signupForm.controls.password.value!,
     );
+    this.#authService.userLogin.next({
+      username: this.signupForm.controls.username.value!,
+      password: this.signupForm.controls.password.value!,
+    })
   }
   ngOnInit() {
     console.log(this.signupForm.value);

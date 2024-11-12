@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,8 +8,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  #authService: AuthService = inject(AuthService);
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    username: new FormControl(this.#authService.userLogin.value?.username, [Validators.required]),
+    password: new FormControl(this.#authService.userLogin.value?.username, [Validators.required]),
   });
 }
