@@ -13,22 +13,18 @@ import {AuthService} from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardOperatorService implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    if (this.authService.isAuthenticated && !this.authService.isTokenExpired) {
-      // if (this.authService.userRole == "ROLE_ADMIN") {
-      //   return true;
-      // }
-      // if (this.authService.userRole == "ROLE_OPERATOR") {
-      //   return this.router.navigateByUrl("/dashboard/operator");
-      // }
-      console.log(this.authService.userRole);
+    console.log("auth-guard entered")
+    if (this.authService.isAuthenticated && !this.authService.isTokenExpired && this.authService.userRole === "ROLE_OPERATOR") {
+      console.log(this.authService?.userRole);
       return true;
-    } else {
+     } else {
+      console.log("auth-guard else entered")
       return this.router.navigateByUrl("/auth/login");
     }
     }
