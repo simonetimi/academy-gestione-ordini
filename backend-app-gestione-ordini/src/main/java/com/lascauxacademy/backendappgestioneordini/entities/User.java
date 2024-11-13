@@ -29,13 +29,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 	
-	@Column
+	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column
+	@Column(nullable = false, unique = true)
 	private String username;
 
-	@Column
+	@Column(nullable = false)
 	@JsonIgnore
 	private String password;
 ;

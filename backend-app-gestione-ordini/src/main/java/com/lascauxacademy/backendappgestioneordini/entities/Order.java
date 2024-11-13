@@ -30,7 +30,7 @@ public class Order {
     @Column(name = "products_list")
     private List<OrderProduct> orderProducts;
 
-    @Column(name = "total_price")
+    @Column(name = "total_price", nullable = false)
     private double totalPrice;
 
     @ManyToOne

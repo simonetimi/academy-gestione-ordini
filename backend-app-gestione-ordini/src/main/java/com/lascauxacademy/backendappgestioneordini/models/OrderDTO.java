@@ -2,34 +2,19 @@ package com.lascauxacademy.backendappgestioneordini.models;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class OrderDTO {
-    String clientId;
+	private String clientId;
 
-    OrderState orderState;
+	private OrderState orderState;
 
-    List<OrderProductDTO> orderProductList;
+	private List<OrderProductDTO> orderProductList;
 
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public OrderState getOrderState() {
-        return orderState;
-    }
-
-    public void setOrderState(OrderState orderState) {
-        this.orderState = orderState;
-    }
-
-    public List<OrderProductDTO> getOrderProductList() {
-        return orderProductList;
-    }
-
-    public void setOrderProductList(List<OrderProductDTO> orderProductList) {
-        this.orderProductList = orderProductList;
-    }
+	private double totalPrice;
 }

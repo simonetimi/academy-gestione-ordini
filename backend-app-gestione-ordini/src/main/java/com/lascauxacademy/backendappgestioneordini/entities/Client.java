@@ -30,19 +30,19 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "company_name")
+    @Column(name = "company_name", unique = true, nullable = false)
     private String companyName;
 
-    @Column(name = "street_name")
+    @Column(name = "street_name",nullable = false)
     private String streetName;
 
-    @Column
+    @Column(nullable = false)
     private String city;
 
-    @Column
+    @Column(nullable = false)
     private String province;
 
-    @Column
+    @Column(nullable = false)
     private String nation;
 
     @JsonIgnore

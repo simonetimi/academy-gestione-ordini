@@ -53,7 +53,6 @@ public class OrderService {
 		if (clientOptional.isEmpty())
 			throw new EntityNotFoundException("Client with id " + orderDTO.getClientId() + " not found");
 
-		double priceTotal = 0;
 		List<OrderProduct> orderProductList = new ArrayList<>();
 
 		// create OrderProduct (list) for every element in the list coming from the DTO
@@ -70,11 +69,10 @@ public class OrderService {
 			orderProductList.add(orderProduct);
 
 			// saves the total price (product price * quantity)
-			priceTotal += orderProductDTO.getQuantity() * product.getPrice();
 		}
 
 		order.setClient(clientOptional.get());
-		order.setTotalPrice(priceTotal);
+		order.setTotalPrice(orderDTO.getTotalPrice());
 		order.setOrderProducts(orderProductList);
 		order.setDate(LocalDateTime.now());
 
