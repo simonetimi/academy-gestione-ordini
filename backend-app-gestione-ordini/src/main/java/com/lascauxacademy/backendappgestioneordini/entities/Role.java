@@ -1,7 +1,11 @@
 package com.lascauxacademy.backendappgestioneordini.entities;
 
+import com.lascauxacademy.backendappgestioneordini.models.ERole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,12 +20,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Role {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	
-	@Column
-	private String code;
+
+	@Enumerated(EnumType.STRING)
+	private ERole roleName;
 
 }

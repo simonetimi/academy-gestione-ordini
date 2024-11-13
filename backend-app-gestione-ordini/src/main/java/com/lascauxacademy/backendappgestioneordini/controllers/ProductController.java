@@ -4,6 +4,7 @@ import com.lascauxacademy.backendappgestioneordini.entities.Product;
 import com.lascauxacademy.backendappgestioneordini.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<Product> addProduct(@RequestBody Product p) {
         Product product = productService.addProduct(p);
         return new ResponseEntity<>(product, HttpStatus.OK);

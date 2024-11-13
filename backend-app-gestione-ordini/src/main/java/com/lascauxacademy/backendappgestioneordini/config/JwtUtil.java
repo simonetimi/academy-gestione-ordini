@@ -1,9 +1,11 @@
 package com.lascauxacademy.backendappgestioneordini.config;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.lascauxacademy.backendappgestioneordini.models.AuthDTO;
+import com.lascauxacademy.backendappgestioneordini.entities.Role;
+import com.lascauxacademy.backendappgestioneordini.models.RegisterDto;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -15,7 +17,7 @@ public class JwtUtil {
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
-                //.setSubjext()
+               // .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // 10 hours
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -30,7 +32,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    public boolean validateToken(String token, AuthDTO user) {
+    public boolean validateToken(String token, RegisterDto user) {
         return extractUsername(token).equals(user.getUsername());
     }
 
