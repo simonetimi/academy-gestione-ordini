@@ -104,3 +104,8 @@ mat-paginator {
   display: flex;
   flex-direction: column;
 }
+
+.mat-danger {
+  background-color: #d70040 !important;
+  color: #fff !important;
+}
