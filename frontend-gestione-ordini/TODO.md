@@ -8,17 +8,17 @@
 - [x] Logout: bottone, logica auth
 
 - [ ] Service state per: prodotti, ordini, clienti
-- [ ] Service chiamate http
-- [ ] Persistance della sessione (JWT/role)
+- [x] Service chiamate http
+- [x] Persistance della sessione (JWT/role)
 
 
-- [ ] Guards per redirect in caso di utente loggato, dipendentemente dal ruolo
-- [ ] Rendering componenti condizionale a seconda del ruolo
+- [x] Guards per redirect in caso di utente loggato, dipendentemente dal ruolo
+- [x] Rendering componenti condizionale a seconda del ruolo
 
 
-- [ ] Dashboard admin: prodotti (componente fatto, da fare con lo state)
-- [ ] Dashboard operatore: clienti
-- [ ] Dashboard operatore: ordini
+- [x] Dashboard admin: prodotti (componente fatto, da fare con lo state)
+- [x] Dashboard operatore: clienti
+- [x] Dashboard operatore: ordini
 
 
 - [ ] Dark mode (optional)
@@ -26,5 +26,5 @@
 
 
 dashboard admin
-- [ ] tabella crud prodotti
-- [ ] pagination
+- [x] tabella crud prodotti
+- [x] pagination

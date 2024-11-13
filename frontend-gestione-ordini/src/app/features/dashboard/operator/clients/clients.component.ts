@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Client } from '../../../../core/models/Client';
 import { ClientModalComponent } from '../../../../shared/components/modals/client-modal/client-modal.component';
+import { ClientsService } from '../../../../core/services/clients.service';
 
 export const ELEMENT_DATA_PLACEHOLDER: Client[] = [
   {
@@ -63,9 +64,17 @@ export class ClientsComponent {
     'provinceAndNation',
     'edit',
   ];
+  #clientsService: ClientsService = inject(ClientsService);
 
-  // TODO PLACEHOLDER DATA!!!!!! PRENDI DAL SERVICE
-  dataSource = new MatTableDataSource(ELEMENT_DATA_PLACEHOLDER);
+  dataSource = new MatTableDataSource();
+
+  ngOnInit() {
+    this.#clientsService.clients.subscribe({
+      next: (value) => {
+        this.dataSource.data = value;
+      },
+    });
+  }
 
   @ViewChild(MatPaginator)
   paginator = null;

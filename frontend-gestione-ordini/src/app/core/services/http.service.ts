@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Product } from '../models/Product';
 import { PersistenceService } from './persistence.service';
+import { Client } from '../models/Client';
 
 @Injectable({
   providedIn: 'root',
@@ -99,6 +100,45 @@ export class HttpService {
       Authorization: `Bearer ${this.#token}`,
     });
     return this.#httpClient.put<Product>(`${this.baseUrl}/products`, product, {
+      headers: headersWithToken,
+    });
+  }
+
+  // clients
+
+  getAllClients() {
+    return this.#httpClient.get<Client[]>(`${this.baseUrl}/clients`);
+  }
+
+  addClient(client: Client) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.post<Client>(`${this.baseUrl}/clients`, client, {
+      headers: headersWithToken,
+    });
+  }
+
+  removeClient(clientId: string) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.delete<string>(
+      `${this.baseUrl}/client/${clientId}`,
+      {
+        headers: headersWithToken,
+      },
+    );
+  }
+
+  updateClient(client: Client) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.put<Client>(`${this.baseUrl}/clients`, client, {
       headers: headersWithToken,
     });
   }
