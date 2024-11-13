@@ -7,7 +7,7 @@
       </mat-list-item>
       <mat-list-item>Quantità: {{ product.quantity }} </mat-list-item>
       <mat-list-item
-        >Prezzo unitario: {{ product.product.price }}
+        >Prezzo unitario: {{ product.product.price | currency: "EUR" }}
       </mat-list-item>
       @if (!last) {
         <mat-divider />

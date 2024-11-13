@@ -29,14 +29,11 @@
         <mat-label>Cliente</mat-label>
         <mat-select formControlName="client">
           @for (client of clients; track client.id) {
-            <mat-option [value]="client.id">{{
-              client.companyName
-            }}</mat-option>
+            <mat-option [value]="client">{{ client.companyName }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
 
-      <!--
       <button type="button" mat-flat-button (click)="addNewProduct()">
         Aggiungi nuovo prodotto
       </button>
@@ -47,13 +44,24 @@
           track product;
           let idx = $index
         ) {
-          <mat-form-field>
-            <mat-label>Quantità</mat-label>
-            <input matInput [formControlName]="idx" />
-          </mat-form-field>
+          <div [formGroupName]="idx">
+            <mat-form-field>
+              <mat-label>Prodotto</mat-label>
+              <mat-select formControlName="product">
+                @for (productItem of products; track productItem) {
+                  <mat-option [value]="productItem">{{
+                    productItem.name
+                  }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Quantità</mat-label>
+              <input matInput formControlName="quantity" />
+            </mat-form-field>
+          </div>
         }
       </div>
-          -->
     }
 
     <button mat-flat-button>

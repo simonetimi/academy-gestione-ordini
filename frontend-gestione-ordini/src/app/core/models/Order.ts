@@ -6,6 +6,6 @@ export interface Order {
   date: Date;
   state: 'IN_PROGRESS' | 'COMPLETED';
   totalPrice: number;
-  productsList?: OrderProduct[];
+  productsList: OrderProduct[];
   client: Client;
 }

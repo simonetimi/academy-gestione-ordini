@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-const ELEMENT_DATA_PLACEHOLDER: Product[] = [
+export const ELEMENT_DATA_PLACEHOLDER: Product[] = [
   {
     id: 'p1',
     name: 'Prodotto test 1',

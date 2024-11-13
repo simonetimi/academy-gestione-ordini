@@ -6,3 +6,14 @@
 buttom {
   margin-top: 40px;
 }
+
+.new-product-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.new-product-container > div {
+  display: flex;
+  gap: 1rem;
+}
