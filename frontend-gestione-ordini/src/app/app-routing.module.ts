@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {AuthGuardService} from './core/guards/auth-guard.service';
-import {AuthGuardServiceRole} from './core/guards/auth-guard-role.service';
 
 const routes: Routes = [
 
@@ -22,7 +20,7 @@ const routes: Routes = [
       import('./features/dashboard/dashboard.module').then(
         (m) => m.DashboardModule,
       ),
-    // canActivateChild: [AuthGuardService],
+    // canActivateChild: [AuthGuardAdminService],
     // canActivate: [AuthGuardServiceRole],
 
   },

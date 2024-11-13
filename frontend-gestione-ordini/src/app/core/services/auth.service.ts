@@ -34,6 +34,11 @@ export class AuthService {
      this.isTokenExpired = false;
       this.isAuthenticated = true;
       this.userRole = user.role;
+      if(user.role == "ROLE_ADMIN") {
+        this.#router.navigate(['dashboard/', 'admin']);
+      } else {
+        this.#router.navigate(['dashboard/', 'operator']);
+      }
       return;
     }
 
@@ -49,17 +54,25 @@ export class AuthService {
     this.#httpService.login(username, password).subscribe({
       next: (value: HttpResponse<any>) => {
         console.log(value);
+        let user : User = value.body;
         if (value.status === 200) {
           this.#notificationService.sendSuccessNotification(
             `Login avvenuto con successo!`,
           );
-          this.#persistenceService.saveUser(value.body);
-          this.#user$.next(value.body);
+          this.#persistenceService.saveUser(user);
+          this.#user$.next(user);
           this.isAuthenticated = true;
-          if (value.body.role) {
-            this.userRole = value.body.role;
+          this.isTokenExpired = false;
+          if (user.role) {
+            console.log("siamo dentro role" , user.role);
+            this.userRole = user.role;
           }
-          this.#router.navigate(['/dashboard/admin']);
+          console.log("siamo dentro login");
+          if(user.role == "ROLE_ADMIN") {
+            this.#router.navigate(['dashboard/', 'admin']);
+          } else {
+            this.#router.navigate(['dashboard/', 'operator']);
+          }
         }
       },
       error: (err) => {
