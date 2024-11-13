@@ -1,58 +1,53 @@
 package com.lascauxacademy.backendappgestioneordini.controllers;
 
-import java.net.http.HttpClient;
-import java.time.LocalDate;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lascauxacademy.backendappgestioneordini.config.JwtUtil;
-import com.lascauxacademy.backendappgestioneordini.entities.Role;
-import com.lascauxacademy.backendappgestioneordini.entities.User;
-import com.lascauxacademy.backendappgestioneordini.models.AuthDTO;
-import com.lascauxacademy.backendappgestioneordini.repositories.RoleRepository;
-import com.lascauxacademy.backendappgestioneordini.repositories.UserRepository;
-import com.lascauxacademy.backendappgestioneordini.services.UserService;
-
-import jakarta.persistence.EntityNotFoundException;
+import com.lascauxacademy.backendappgestioneordini.models.JWTAuthResponse;
+import com.lascauxacademy.backendappgestioneordini.models.LoginDto;
+import com.lascauxacademy.backendappgestioneordini.models.RegisterDto;
+import com.lascauxacademy.backendappgestioneordini.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-	private final UserService userService;
+	private AuthService authService;
 
-	public AuthController(UserService userService) {
-		super();
-		this.userService = userService;
+	public AuthController(AuthService authService) {
+		this.authService = authService;
 	}
 
-	@PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestBody AuthDTO userAuthDto) {
+	// Build Login REST API
+	@PostMapping(value = { "/login", "/signin" })
+	public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto) {
+
+		String token = authService.login(loginDto);
+		String role;
 		try {
-			userService.signup(userAuthDto);
-			return ResponseEntity.ok("User registered successfully");
+			role = authService.userRole(loginDto.getUsername());
+
+			JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+			jwtAuthResponse.setUsername(loginDto.getUsername());
+			jwtAuthResponse.setAccessToken(token);
+			jwtAuthResponse.setRole(role);
+
+			return ResponseEntity.ok(jwtAuthResponse);
 		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+
 	}
 
-	@PostMapping("/signin")
-	public ResponseEntity<?> signin(@RequestBody AuthDTO loginRequest) {
-		try {
-			return ResponseEntity.ok(userService.signin(loginRequest));
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-		}
-
+	// Build Register REST API
+	@PostMapping(value = { "/register", "/signup" })
+	public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+		String response = authService.register(registerDto);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 }
