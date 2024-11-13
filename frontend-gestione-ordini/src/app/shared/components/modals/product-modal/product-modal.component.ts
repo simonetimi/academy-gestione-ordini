@@ -25,7 +25,7 @@ export class ProductModalComponent {
 
   onProductSubmit() {
     const product: Product = {
-      id: this.productData?.id,
+      id: this.productData?.id || '',
       name: this.productForm.controls.name.value as string,
       price: this.productForm.controls.price.value as number,
       vat: this.productForm.controls.vat.value as number,

@@ -1,11 +1,11 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Product } from '../../../core/models/Product';
 import { ModalService } from '../../../core/services/modal.service';
 import { ProductModalComponent } from '../../../shared/components/modals/product-modal/product-modal.component';
-import { take } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ProductsService } from '../../../core/services/products.service';
 
 export const ELEMENT_DATA_PLACEHOLDER: Product[] = [
   {
@@ -99,12 +99,19 @@ export const ELEMENT_DATA_PLACEHOLDER: Product[] = [
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
-  displayedColumns: string[] = ['name', 'price', 'vat', 'edit'];
+  displayedColumns: string[] = ['name', 'price', 'vat', 'edit', 'delete'];
+  #productsService = inject(ProductsService);
+  dataSource = new MatTableDataSource();
 
-  // TODO PLACEHOLDER DATA!!!!!! PRENDI DAL SERVICE
-  dataSource = new MatTableDataSource(ELEMENT_DATA_PLACEHOLDER);
+  ngOnInit() {
+    this.#productsService.products.subscribe({
+      next: (value) => {
+        this.dataSource.data = value;
+      },
+    });
+  }
 
   @ViewChild(MatPaginator)
   paginator = null;
@@ -119,15 +126,11 @@ export class AdminComponent {
 
   onClickAdd() {
     this.#modalService.openModal(ProductModalComponent).subscribe({
-      next: (result) => {
+      next: (result: Product | null) => {
         if (result) {
-          console.log(
-            'qui chiami il servizio stato + http! Vuol dire che la modale restituisce dati',
-          );
+          this.#productsService.addProduct(result);
         }
       },
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
     });
   }
 
@@ -135,17 +138,13 @@ export class AdminComponent {
     this.#modalService.openModal(ProductModalComponent, product).subscribe({
       next: (result) => {
         if (result) {
-          console.log(
-            'qui chiami il servizio stato + http! Vuol dire che la modale restituisce dati',
-          );
+          this.#productsService.updateProduct(result);
         }
       },
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
     });
   }
 
-  // TODO prendi data source da servizio prodotti (chiamata http)
-  // TODO aggiungi tasto per cambiare prezzo, iva, nome prodotto. mappa gli id per fare la chiamata!
-  // TODO (continua) usa conditional rendering per vedere se una delle tab sta venendo utilizzata
+  onClickDelete(product: Product) {
+    this.#productsService.removeProduct(product);
+  }
 }

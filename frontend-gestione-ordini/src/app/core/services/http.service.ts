@@ -1,44 +1,105 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import { User } from '../models/User';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Product } from '../models/Product';
+import { PersistenceService } from './persistence.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  #httpClient: HttpClient;
+  #httpClient: HttpClient = inject(HttpClient);
+  #token = '';
 
-  constructor(httpClient: HttpClient) {
-    this.#httpClient = httpClient;
+  baseUrl = 'http://localhost:8080';
+
+  constructor() {
+    // prende il token dal local storage, se esiste
+    const stringifiedUser = localStorage.getItem('user');
+    if (stringifiedUser) {
+      this.#token = JSON.parse(stringifiedUser).token;
+    }
   }
+
+  setToken(token: string) {
+    this.#token = token;
+  }
+
+  // auth
 
   login(username: string, password: string) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
-    return this.#httpClient.post('http://localhost:8080/auth/signin', {
-      username,
-      password,
-    },{
-      headers: headers,
-      observe: 'response',
-      responseType: 'json'
-    });
+    return this.#httpClient.post(
+      `${this.baseUrl}/auth/signin`,
+      {
+        username,
+        password,
+      },
+      {
+        headers: headers,
+        observe: 'response',
+        responseType: 'json',
+      },
+    );
   }
 
   signup(username: string, email: string, password: string) {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
-    return this.#httpClient.post('http://localhost:8080/auth/signup', {
-      username,
-      email,
-      password,
-    },{
-      headers: headers,
-      observe: 'response',
-      responseType: 'text'
+    return this.#httpClient.post(
+      `${this.baseUrl}/auth/signup`,
+      {
+        username,
+        email,
+        password,
+      },
+      {
+        headers: headers,
+        observe: 'response',
+        responseType: 'text',
+      },
+    );
+  }
+
+  // products
+
+  getAllproducts() {
+    return this.#httpClient.get<Product[]>(`${this.baseUrl}/products`);
+  }
+
+  addProduct(product: Product) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.post<Product>(`${this.baseUrl}/products`, product, {
+      headers: headersWithToken,
+    });
+  }
+
+  removeProduct(productId: string) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.delete<string>(
+      `${this.baseUrl}/products/${productId}`,
+      {
+        headers: headersWithToken,
+      },
+    );
+  }
+
+  updateProduct(product: Product) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.put<Product>(`${this.baseUrl}/products`, product, {
+      headers: headersWithToken,
     });
   }
 }

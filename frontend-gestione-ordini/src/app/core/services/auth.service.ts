@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/User';
 import { HttpService } from './http.service';
 import { PersistenceService } from './persistence.service';
@@ -20,7 +20,7 @@ export class AuthService {
 
   isAuthenticated = false;
   isTokenExpired = true;
-  userRole = "";
+  userRole = '';
 
   constructor() {
     // check if user exists
@@ -31,39 +31,42 @@ export class AuthService {
     const expiredDate = new Date(user.tokenExpireDate);
     const currentDate = new Date();
     if (currentDate < expiredDate) {
-     this.isTokenExpired = false;
+      this.isTokenExpired = false;
       this.isAuthenticated = true;
       this.userRole = user.role;
-      return;
     }
 
     // emit user (behavior subject)
     this.#user$.next(user);
   }
 
-  get user(): Observable<User | null> {
-    return this.#user$.asObservable();
+  get user(): BehaviorSubject<User | null> {
+    return this.#user$;
   }
 
   login(username: string, password: string) {
     this.#httpService.login(username, password).subscribe({
       next: (value: HttpResponse<any>) => {
-        console.log(value);
-        if (value.status === 200) {
-          this.#notificationService.sendSuccessNotification(
-            `Login avvenuto con successo!`,
-          );
-          this.#persistenceService.saveUser(value.body);
-          this.#user$.next(value.body);
-          this.isAuthenticated = true;
-          if (value.body.role) {
-            this.userRole = value.body.role;
-          }
-          this.#router.navigate(['/dashboard/admin']);
+        const user: User = value.body;
+        this.#notificationService.sendSuccessNotification(
+          `Login avvenuto con successo!`,
+        );
+        // salva utente nella persistenza e next nel behavior observable
+        this.#persistenceService.saveUser(user);
+        this.#user$.next(user);
+        this.isAuthenticated = true;
+        // invia il token all'http service
+
+        this.#httpService.setToken(user.token);
+        if (user.role) {
+          this.userRole = user.role;
         }
+        this.#router.navigate(['/dashboard/admin']);
       },
       error: (err) => {
-        this.#notificationService.sendNotification(`Errore login: ${err}`);
+        this.#notificationService.sendNotification(
+          `Errore login: ${err.message}`,
+        );
       },
     });
   }
@@ -81,7 +84,7 @@ export class AuthService {
       error: (err) => {
         console.log(err);
         this.#notificationService.sendErrorNotification(
-          `Errore registrazione: ${err}`,
+          `Errore registrazione: ${err.message}`,
         );
       },
     });
