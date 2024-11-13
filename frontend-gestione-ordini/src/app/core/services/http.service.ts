@@ -13,9 +13,16 @@ export class HttpService {
   }
 
   login(username: string, password: string) {
-    return this.#httpClient.post<User>('http://localhost:8080/auth/signin', {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.#httpClient.post('http://localhost:8080/auth/signin', {
       username,
       password,
+    },{
+      headers: headers,
+      observe: 'response',
+      responseType: 'json'
     });
   }
 
