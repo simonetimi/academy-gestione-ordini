@@ -26,13 +26,14 @@ public class ProductController {
     }
 
     @PostMapping("")
-    @PreAuthorize("hasRole('ROLE_OPERATOR')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Product> addProduct(@RequestBody Product p) {
         Product product = productService.addProduct(p);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") String productId) {
         try {
             productService.deleteProduct(productId);
@@ -44,6 +45,7 @@ public class ProductController {
 
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> updateProduct(@RequestBody Product p) {
         try {
             Product product = productService.updateProduct(p);

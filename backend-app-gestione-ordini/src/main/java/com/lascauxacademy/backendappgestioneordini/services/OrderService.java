@@ -16,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -75,8 +76,8 @@ public class OrderService {
 		order.setClient(clientOptional.get());
 		order.setTotalPrice(priceTotal);
 		order.setOrderProducts(orderProductList);
+		order.setDate(LocalDateTime.now());
 
-		// todo prezzo totale
 		return orderRepo.save(order);
 	}
 
