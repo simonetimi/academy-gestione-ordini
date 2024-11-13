@@ -1,5 +1,7 @@
 package com.lascauxacademy.backendappgestioneordini.controllers;
 
+import java.util.Date;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,7 @@ public class AuthController {
 			jwtAuthResponse.setUsername(loginDto.getUsername());
 			jwtAuthResponse.setAccessToken(token);
 			jwtAuthResponse.setRole(role);
+			jwtAuthResponse.setTokenExpireDate(System.currentTimeMillis() + 1000 * 60 * 60 * 10); // 10 hours in millis
 
 			return ResponseEntity.ok(jwtAuthResponse);
 		} catch (Exception e) {

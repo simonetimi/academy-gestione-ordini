@@ -22,7 +22,7 @@ public class OrderController {
     }
 
     @PostMapping("")
-    //@PreAuthorize("hasRole('OPERATOR')")
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<?> addOrder(@RequestBody OrderDTO orderDTO) {
         try {
             Order order = orderService.postOrder(orderDTO);
@@ -33,6 +33,7 @@ public class OrderController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<?> updateOrder(@PathVariable("id") String orderId, @RequestBody StateDTO status) {
         try {
             Order order = orderService.updateOrder(orderId, status);
