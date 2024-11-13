@@ -1,9 +1,7 @@
 package com.lascauxacademy.backendappgestioneordini.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -30,21 +28,21 @@ public class SecurityConfig {
 
     public SecurityConfig(UserDetailsService userDetailsService,
                           JwtAuthenticationEntryPoint authenticationEntryPoint,
-                          JwtAuthenticationFilter authenticationFilter){
+                          JwtAuthenticationFilter authenticationFilter) {
         this.userDetailsService = userDetailsService;
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.authenticationFilter = authenticationFilter;
     }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-		return authConfig.getAuthenticationManager();
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
 //
 //	@Bean
 //	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -55,28 +53,28 @@ public class SecurityConfig {
 //						.requestMatchers("/products", "/products/**").permitAll().anyRequest().authenticated());
 //		return http.build();
 //	}
-	
-	 @Bean
-	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	    	http.csrf(csrf -> csrf.disable())
-	        .authorizeHttpRequests((authorize) -> authorize
-	        		.requestMatchers("/auth/**").permitAll()
-	                .requestMatchers("/role", "/role/**").permitAll()
-	                .requestMatchers("/client", "/client/**").permitAll()
-	                .requestMatchers("/orders", "/orders/**").permitAll()
-	                .requestMatchers("/products", "/products/**").permitAll()
-	                .anyRequest().authenticated())
-	        .exceptionHandling( exception -> exception
-	                .authenticationEntryPoint(authenticationEntryPoint)
-	        ).sessionManagement( session -> session
-	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	        );
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	    	http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/role", "/role/**").permitAll()
+                        .requestMatchers("/clients", "/clients/**").permitAll()
+                        .requestMatchers("/orders", "/orders/**").permitAll()
+                        .requestMatchers("/products", "/products/**").permitAll()
+                        .anyRequest().authenticated())
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                ).sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
+
+        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 //	        http.cors(Customizer.withDefaults());
-	    	return http.build();
-	    }
+        return http.build();
+    }
 
 }

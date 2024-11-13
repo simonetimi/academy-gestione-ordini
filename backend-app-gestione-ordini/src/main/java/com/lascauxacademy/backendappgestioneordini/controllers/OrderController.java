@@ -2,13 +2,14 @@ package com.lascauxacademy.backendappgestioneordini.controllers;
 
 import com.lascauxacademy.backendappgestioneordini.entities.Order;
 import com.lascauxacademy.backendappgestioneordini.models.OrderDTO;
-import com.lascauxacademy.backendappgestioneordini.models.OrderState;
 import com.lascauxacademy.backendappgestioneordini.models.StateDTO;
 import com.lascauxacademy.backendappgestioneordini.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -19,6 +20,12 @@ public class OrderController {
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Order>> getAllOrders() {
+        List<Order> orders = this.orderService.getAllOrders();
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @PostMapping("")

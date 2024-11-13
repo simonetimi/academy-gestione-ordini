@@ -1,6 +1,5 @@
 package com.lascauxacademy.backendappgestioneordini.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lascauxacademy.backendappgestioneordini.entities.Client;
@@ -8,45 +7,50 @@ import com.lascauxacademy.backendappgestioneordini.repositories.ClientRepository
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ClientService {
 
-	private final ClientRepository clientRepo;
+    private final ClientRepository clientRepo;
 
-	public ClientService(ClientRepository clientRepo) {
-		super();
-		this.clientRepo = clientRepo;
-	}
+    public ClientService(ClientRepository clientRepo) {
+        this.clientRepo = clientRepo;
+    }
 
-	@Transactional
-	public Client createClient(Client client) throws Exception {
-		if (clientRepo.existsByCompanyName(client.getCompanyName())) {
-			throw new EntityExistsException("Company already exists!");
-		}
-		Client c = clientRepo.save(client);
-		return c;
-	}
+    @Transactional(readOnly = true)
+    public List<Client> getAllClients() {
+        return clientRepo.findAll();
+    }
 
-	@Transactional
-	public Client modifyClient(Client client) throws Exception {
-		if (!clientRepo.existsById(client.getId())) {
-			throw new EntityNotFoundException("Client doesn't exist in database!");
-		}
+    @Transactional
+    public Client createClient(Client client) throws Exception {
+        if (clientRepo.existsByCompanyName(client.getCompanyName())) {
+            throw new EntityExistsException("Company already exists!");
+        }
+        return clientRepo.save(client);
+    }
 
-		return clientRepo.save(client);
-	}
+    @Transactional
+    public Client modifyClient(Client client) throws Exception {
+        if (!clientRepo.existsById(client.getId())) {
+            throw new EntityNotFoundException("Client doesn't exist in database!");
+        }
 
-	@Transactional
-	public String deleteClient(String id) throws Exception {
-		if (!clientRepo.existsById(id)) {
-			throw new EntityNotFoundException("Client doesn't exist in database!");
-		}
+        return clientRepo.save(client);
+    }
 
-		clientRepo.deleteById(id);
+    @Transactional
+    public String deleteClient(String id) throws Exception {
+        if (!clientRepo.existsById(id)) {
+            throw new EntityNotFoundException("Client doesn't exist in database!");
+        }
 
-		return "Client deleted successfully!";
-	}
+        clientRepo.deleteById(id);
+
+        return "Client deleted successfully!";
+    }
 
 }

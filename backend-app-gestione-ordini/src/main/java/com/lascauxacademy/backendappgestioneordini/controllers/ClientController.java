@@ -3,25 +3,27 @@ package com.lascauxacademy.backendappgestioneordini.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lascauxacademy.backendappgestioneordini.entities.Client;
 import com.lascauxacademy.backendappgestioneordini.services.ClientService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
 public class ClientController {
 
     private final ClientService clientService;
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Client>> getAllClients() {
+        List<Client> clients = clientService.getAllClients();
+        return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -44,7 +46,7 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<String> deleteClient(@PathVariable String id) {
         try {
