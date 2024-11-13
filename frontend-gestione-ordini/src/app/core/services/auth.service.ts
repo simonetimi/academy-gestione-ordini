@@ -19,6 +19,10 @@ export class AuthService {
   #notificationService: NotificationService = inject(NotificationService);
   #router: Router = inject(Router);
 
+  isAuthenticated = false;
+  isTokenExpired = true;
+  userRole = "";
+
   constructor() {
     // check if user exists
     const user: User | null = this.#persistenceService.retrieveUser();
@@ -27,7 +31,12 @@ export class AuthService {
     // check if user's token is expired
     const expiredDate = new Date(user.tokenExpireDate);
     const currentDate = new Date();
-    if (expiredDate < currentDate) return;
+    if (currentDate < expiredDate) {
+     this.isTokenExpired = false;
+      this.isAuthenticated = true;
+      this.userRole = user.role;
+      return;
+    }
 
     // emit user (behavior subject)
     this.#user$.next(user);
@@ -39,9 +48,20 @@ export class AuthService {
 
   login(username: string, password: string) {
     this.#httpService.login(username, password).subscribe({
-      next: (value: User) => {
-        this.#persistenceService.saveUser(value);
-        this.#user$.next(value);
+      next: (value: HttpResponse<any>) => {
+        console.log(value);
+        if (value.status === 200) {
+          this.#notificationService.sendSuccessNotification(
+            `Login avvenuto con successo!`,
+          );
+          this.#persistenceService.saveUser(value.body);
+          this.#user$.next(value.body);
+          this.isAuthenticated = true;
+          if (value.body.role) {
+            this.userRole = value.body.role;
+          }
+          this.#router.navigate(['/dashboard/admin']);
+        }
       },
       error: (err) => {
         this.#notificationService.sendNotification(`Errore login: ${err}`);
