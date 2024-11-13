@@ -7,93 +7,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ProductsService } from '../../../core/services/products.service';
 
-export const ELEMENT_DATA_PLACEHOLDER: Product[] = [
-  {
-    id: 'p1',
-    name: 'Prodotto test 1',
-    price: 100,
-    vat: 22,
-  },
-  {
-    id: 'p2',
-    name: 'Prodotto test 2',
-    price: 300,
-    vat: 22,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-  {
-    id: 'p3',
-    name: 'Prodotto test 3',
-    price: 5,
-    vat: 10,
-  },
-];
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -103,12 +16,17 @@ export class AdminComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
   displayedColumns: string[] = ['name', 'price', 'vat', 'edit', 'delete'];
   #productsService = inject(ProductsService);
+
   dataSource = new MatTableDataSource();
+  hiddenTable = true;
 
   ngOnInit() {
     this.#productsService.products.subscribe({
       next: (value) => {
         this.dataSource.data = value;
+        if (this.dataSource.data.length > 0) {
+          this.hiddenTable = false;
+        }
       },
     });
   }

@@ -2,65 +2,66 @@
 <button class="add-button" mat-flat-button (click)="onClickAdd()">
   Aggiungi prodotto
 </button>
-@if (dataSource.data.length > 0) {
-  <div class="table-wrapper mat-elevation-z2">
-    <table mat-table [dataSource]="dataSource" matSort>
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-        <td mat-cell *matCellDef="let product">{{ product.name }}</td>
-      </ng-container>
 
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
-        <td mat-cell *matCellDef="let product">
-          {{ product.price | currency: "EUR" }}
-        </td>
-      </ng-container>
+<div class="table-wrapper mat-elevation-z2" [hidden]="hiddenTable">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+    </ng-container>
 
-      <!-- Vat Column -->
-      <ng-container matColumnDef="vat">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
-        <td mat-cell *matCellDef="let product">{{ product.vat + "%" }}</td>
-      </ng-container>
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.price | currency: "EUR" }}
+      </td>
+    </ng-container>
 
-      <!-- Edit Column -->
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef>Modifica</th>
-        <td mat-cell *matCellDef="let product">
-          <button
-            (click)="onClickEdit(product)"
-            mat-mini-fab
-            aria-label="Modifica prodotto"
-            class="icon-button"
-            color="primary"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+    <!-- Vat Column -->
+    <ng-container matColumnDef="vat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
+      <td mat-cell *matCellDef="let product">{{ product.vat + "%" }}</td>
+    </ng-container>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef>Elimina</th>
-        <td mat-cell *matCellDef="let product">
-          <button
-            (click)="onClickDelete(product)"
-            mat-mini-fab
-            aria-label="Elimina prodotto"
-            class="icon-button"
-            color="danger"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+    <!-- Edit Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Modifica</th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          (click)="onClickEdit(product)"
+          mat-mini-fab
+          aria-label="Modifica prodotto"
+          class="icon-button"
+          color="primary"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Elimina</th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          (click)="onClickDelete(product)"
+          mat-mini-fab
+          aria-label="Elimina prodotto"
+          class="icon-button"
+          color="danger"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+<div>
   <mat-paginator
     class="mat-elevation-z2"
     [pageSizeOptions]="[5, 10]"
@@ -68,6 +69,8 @@
     aria-label="Seleziona pagina prodotti"
   >
   </mat-paginator>
-} @else {
+</div>
+
+@if (hiddenTable) {
   <h3>Nessun prodotto presente.</h3>
 }

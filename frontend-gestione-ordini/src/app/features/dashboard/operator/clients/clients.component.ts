@@ -24,11 +24,17 @@ export class ClientsComponent {
   #clientsService: ClientsService = inject(ClientsService);
 
   dataSource = new MatTableDataSource();
+  noData = true;
 
   ngOnInit() {
     this.#clientsService.clients.subscribe({
       next: (value) => {
         this.dataSource.data = value;
+        // se non ci sono dati, setta il valore hiddenTable a falso, per il rendering condizionale della tabella
+        // mat-sorting non funziona con un tradizionale ngIf o @if
+        if (this.dataSource.data.length > 0) {
+          this.noData = false;
+        }
       },
     });
   }

@@ -11,6 +11,8 @@ import { ViewOrderProductsComponent } from '../../../../shared/components/modals
 import { OrderModalComponent } from '../../../../shared/components/modals/order-modal/order-modal.component';
 import { OrdersService } from '../../../../core/services/orders.service';
 
+// TODO: MOSTRA PRODOTTI IVA IN: PRODOTTI (ADMIN), VIEW PRODOTTI MODAL, ORDINI
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -31,11 +33,17 @@ export class OrdersComponent {
   #ordersService: OrdersService = inject(OrdersService);
 
   dataSource = new MatTableDataSource();
+  noData = true;
 
   ngOnInit() {
     this.#ordersService.orders.subscribe({
       next: (value) => {
         this.dataSource.data = value;
+        // se non ci sono dati, setta il valore hiddenTable a falso, per il rendering condizionale della tabella
+        // mat-sorting non funziona con un tradizionale ngIf o @if
+        if (this.dataSource.data.length > 0) {
+          this.noData = false;
+        }
       },
     });
   }
