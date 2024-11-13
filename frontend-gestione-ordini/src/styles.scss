@@ -21,7 +21,8 @@ main {
 header {
   background: #ffffff22;
   backdrop-filter: blur(6px);
-  border: 1px solid #ffffff22;
+  box-shadow: #666666 1px 1px 6px 1px;
+  border-radius: 0 0 25px 25px;
 }
 
 h1 {

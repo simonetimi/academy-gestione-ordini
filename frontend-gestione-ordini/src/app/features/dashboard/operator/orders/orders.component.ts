@@ -13,6 +13,10 @@ import { OrdersService } from '../../../../core/services/orders.service';
 
 // TODO: MOSTRA PRODOTTI IVA IN: PRODOTTI (ADMIN), VIEW PRODOTTI MODAL, ORDINI
 
+// TODO fix modifica utente non si riflette negli ordini:
+//  fai refresh forzato == non della pagina, fai nuova richiesta http che aggiorni gli ordini.
+//  fallo nel service, nella funzione che aggiorna gli utenti
+
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -39,6 +43,7 @@ export class OrdersComponent {
     this.#ordersService.orders.subscribe({
       next: (value) => {
         this.dataSource.data = value;
+        console.log(value);
         // se non ci sono dati, setta il valore hiddenTable a falso, per il rendering condizionale della tabella
         // mat-sorting non funziona con un tradizionale ngIf o @if
         if (this.dataSource.data.length > 0) {
@@ -80,7 +85,6 @@ export class OrdersComponent {
   }
 
   onViewProducts(products: OrderProduct[]) {
-    // TODO: PRODUCTS UNDEFINED
     console.log(products);
     this.#modalService.openModal(ViewOrderProductsComponent, products);
   }
