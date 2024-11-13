@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/Product';
-import { PersistenceService } from './persistence.service';
 import { Client } from '../models/Client';
+import { Order } from '../models/Order';
 
 @Injectable({
   providedIn: 'root',
@@ -139,6 +139,32 @@ export class HttpService {
       Authorization: `Bearer ${this.#token}`,
     });
     return this.#httpClient.put<Client>(`${this.baseUrl}/clients`, client, {
+      headers: headersWithToken,
+    });
+  }
+
+  // orders
+
+  getAllOrders() {
+    return this.#httpClient.get<Order[]>(`${this.baseUrl}/orders`);
+  }
+
+  addOrder(order: Order) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.post<Order>(`${this.baseUrl}/orders`, order, {
+      headers: headersWithToken,
+    });
+  }
+
+  updateOrder(order: Order) {
+    const headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
+    return this.#httpClient.put<Order>(`${this.baseUrl}/orders`, order, {
       headers: headersWithToken,
     });
   }

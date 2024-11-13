@@ -11,6 +11,8 @@ import { ViewClientModalComponent } from '../../../../shared/components/modals/v
 import { OrderProduct } from '../../../../core/models/OrderProduct';
 import { ViewOrderProductsComponent } from '../../../../shared/components/modals/view-order-products/view-order-products.component';
 import { OrderModalComponent } from '../../../../shared/components/modals/order-modal/order-modal.component';
+import { ClientsService } from '../../../../core/services/clients.service';
+import { OrdersService } from '../../../../core/services/orders.service';
 
 // TODO DA FARE PER ULTIMO (prima client)
 
@@ -127,8 +129,17 @@ export class OrdersComponent {
     'edit',
   ];
 
-  // TODO PLACEHOLDER DATA!!!!!! PRENDI DAL SERVICE
-  dataSource = new MatTableDataSource(ELEMENT_DATA_PLACEHOLDER);
+  #ordersService: OrdersService = inject(OrdersService);
+
+  dataSource = new MatTableDataSource();
+
+  ngOnInit() {
+    this.#ordersService.orders.subscribe({
+      next: (value) => {
+        this.dataSource.data = value;
+      },
+    });
+  }
 
   @ViewChild(MatPaginator)
   paginator = null;
@@ -143,17 +154,21 @@ export class OrdersComponent {
 
   onClickAdd() {
     this.#modalService.openModal(OrderModalComponent).subscribe({
-      next: (result) => console.log(result),
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
+      next: (result: Order | null) => {
+        if (result) {
+          this.#ordersService.addOrder(result);
+        }
+      },
     });
   }
 
   onClickEdit(order: Order) {
     this.#modalService.openModal(OrderModalComponent, order).subscribe({
-      next: (result) => console.log(result),
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
+      next: (result: Order | null) => {
+        if (result) {
+          this.#ordersService.updateOrder(result);
+        }
+      },
     });
   }
 
@@ -164,8 +179,4 @@ export class OrdersComponent {
   onViewClient(client: Client) {
     this.#modalService.openModal(ViewClientModalComponent, client);
   }
-
-  // TODO prendi data source da servizio prodotti (chiamata http)
-  // TODO aggiungi tasto per cambiare prezzo, iva, nome prodotto. mappa gli id per fare la chiamata!
-  // TODO (continua) usa conditional rendering per vedere se una delle tab sta venendo utilizzata
 }

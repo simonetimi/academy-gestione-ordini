@@ -1,32 +1,36 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivate, CanActivateChild,
+  CanActivate,
+  CanActivateChild,
   GuardResult,
   MaybeAsync,
   Router,
-  RouterStateSnapshot
+  RouterStateSnapshot,
 } from '@angular/router';
-import {AuthService} from '../services/auth.service';
-
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuardAdminService implements CanActivate {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    console.log("auth-guard entered")
-    if (this.authService.isAuthenticated && !this.authService.isTokenExpired && this.authService.userRole === "ROLE_ADMIN") {
-      console.log(this.authService?.userRole);
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): MaybeAsync<GuardResult> {
+    if (
+      this.authService.isAuthenticated &&
+      !this.authService.isTokenExpired &&
+      this.authService.userRole === 'ROLE_ADMIN'
+    ) {
       return true;
-     } else {
-      console.log("auth-guard else entered")
-      return this.router.navigateByUrl("/auth/login");
+    } else {
+      return this.router.navigateByUrl('/auth/login');
     }
-    }
-
+  }
 }
