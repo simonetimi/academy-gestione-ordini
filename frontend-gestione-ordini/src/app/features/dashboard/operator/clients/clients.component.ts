@@ -89,33 +89,21 @@ export class ClientsComponent {
 
   onClickAdd() {
     this.#modalService.openModal(ClientModalComponent).subscribe({
-      next: (result) => {
+      next: (result: Client | null) => {
         if (result) {
-          console.log(
-            'qui chiami il servizio stato + http! Vuol dire che la modale restituisce dati',
-          );
+          this.#clientsService.addClient(result);
         }
       },
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
     });
   }
 
   onClickEdit(client: Client) {
     this.#modalService.openModal(ClientModalComponent, client).subscribe({
-      next: (result) => {
+      next: (result: Client | null) => {
         if (result) {
-          console.log(
-            'qui chiami il servizio stato + http! Vuol dire che la modale restituisce dati',
-          );
+          this.#clientsService.updateClient(result);
         }
       },
-      // TODO chiama service se result esiste (per fare chiamata http/agg stato)
-      //  result ? this.#stateService.addColleague(result) : null,
     });
   }
-
-  // TODO prendi data source da servizio prodotti (chiamata http)
-  // TODO aggiungi tasto per cambiare prezzo, iva, nome prodotto. mappa gli id per fare la chiamata!
-  // TODO (continua) usa conditional rendering per vedere se una delle tab sta venendo utilizzata
 }

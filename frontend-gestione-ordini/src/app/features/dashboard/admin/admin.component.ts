@@ -136,7 +136,7 @@ export class AdminComponent implements OnInit {
 
   onClickEdit(product: Product) {
     this.#modalService.openModal(ProductModalComponent, product).subscribe({
-      next: (result) => {
+      next: (result: Product | null) => {
         if (result) {
           this.#productsService.updateProduct(result);
         }

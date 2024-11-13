@@ -29,10 +29,10 @@ export class ClientModalComponent {
     const client: Client = {
       id: this.clientData?.id as string,
       companyName: this.clientForm.controls.companyName.value as string,
-      streetName: this.clientForm.controls.companyName.value as string,
-      city: this.clientForm.controls.companyName.value as string,
-      province: this.clientForm.controls.companyName.value as string,
-      nation: this.clientForm.controls.companyName.value as string,
+      streetName: this.clientForm.controls.streetName.value as string,
+      city: this.clientForm.controls.city.value as string,
+      province: this.clientForm.controls.province.value as string,
+      nation: this.clientForm.controls.nation.value as string,
     };
     this.#dialogRef.close(client);
   }
