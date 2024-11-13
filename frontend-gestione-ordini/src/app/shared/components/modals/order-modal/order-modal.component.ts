@@ -60,10 +60,6 @@ export class OrderModalComponent {
   }
 
   onOrderSubmit() {
-    // trova il client
-    //const client = this.clients.find((client) => {
-    //  return client.id === this.orderForm.controls.client.value;
-    //});
     const products: OrderProduct[] = this.productsList.value;
 
     const totalPrice = products.reduce(
