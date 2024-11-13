@@ -7,49 +7,6 @@ import { Client } from '../../../../core/models/Client';
 import { ClientModalComponent } from '../../../../shared/components/modals/client-modal/client-modal.component';
 import { ClientsService } from '../../../../core/services/clients.service';
 
-export const ELEMENT_DATA_PLACEHOLDER: Client[] = [
-  {
-    id: 'c1',
-    companyName: 'Enel',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c2',
-    companyName: 'Bartolini',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c3',
-    companyName: 'Nessuno',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c4',
-    companyName: 'BIC',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c5',
-    companyName: 'Baguette & CO',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-];
-
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',

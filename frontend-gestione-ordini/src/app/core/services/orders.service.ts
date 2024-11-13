@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpService } from './http.service';
 import { NotificationService } from './notification.service';
-import { Order } from '../models/Order';
+import { Order, OrderDTO, OrderStateDto } from '../models/Order';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,22 @@ export class OrdersService {
   }
 
   addOrder(order: Order) {
-    this.#httpService.addOrder(order).subscribe({
+    // dto per matchare il dto che richiede il backend (manda i prodotti e il cliente solo come ID)
+    const orderDto: OrderDTO = {
+      id: order.id,
+      date: order.date,
+      state: order.state,
+      totalPrice: order.totalPrice,
+      clientId: order.client.id,
+      orderProductList: order.orderProducts.map((orderProduct) => {
+        return {
+          productId: orderProduct.product.id,
+          quantity: orderProduct.quantity,
+        };
+      }),
+    };
+
+    this.#httpService.addOrder(orderDto).subscribe({
       next: (value) => {
         // aggiorna behavior subject
         const orders = this.#orders$.getValue();
@@ -40,7 +55,10 @@ export class OrdersService {
   }
 
   updateOrder(order: Order) {
-    this.#httpService.updateOrder(order).subscribe({
+    const orderState: OrderStateDto = {
+      state: order.state,
+    };
+    this.#httpService.updateOrder(orderState, order.id).subscribe({
       next: (value) => {
         // aggiorna behavior subject
         const orders = this.#orders$.getValue();

@@ -1,32 +1,57 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Client } from '../../../../core/models/Client';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Order } from '../../../../core/models/Order';
-import { ELEMENT_DATA_PLACEHOLDER as clientsImport } from '../../../../features/dashboard/operator/clients/clients.component';
-import { ELEMENT_DATA_PLACEHOLDER as productsImport } from '../../../../features/dashboard/admin/admin.component';
 import { Product } from '../../../../core/models/Product';
 import { OrderProduct } from '../../../../core/models/OrderProduct';
+import { ClientsService } from '../../../../core/services/clients.service';
+import { ProductsService } from '../../../../core/services/products.service';
 
 @Component({
   selector: 'app-order-modal',
   templateUrl: './order-modal.component.html',
   styleUrl: './order-modal.component.scss',
 })
-export class OrderModalComponent {
+export class OrderModalComponent implements OnInit {
   #dialogRef = inject(MatDialogRef);
   orderData: Order | null = inject(MAT_DIALOG_DATA);
-
-  //TODO this is a placeholder for clients AND PRODUCTS. get it from the clients + products state!
-  clients: Client[] = clientsImport;
-  products: Product[] = productsImport;
-
-  constructor() {}
+  #clientsService: ClientsService = inject(ClientsService);
+  #productsService: ProductsService = inject(ProductsService);
+  clients: Client[] = [];
+  products: Product[] = [];
 
   // se product esiste, isEditMode è true. se product non esiste, questo valore è false
   isEditMode = !!this.orderData;
 
-  // TODO client and state should be a select
+  ngOnInit() {
+    this.#clientsService.clients.subscribe({
+      next: (value) => {
+        this.clients = value;
+      },
+    });
+    this.#productsService.products.subscribe({
+      next: (value) => {
+        this.products = value;
+      },
+    });
+
+    // crea i formarray con i dati dei prodotti, perché poi quando chiama il service usa i dati nei form array
+    if (this.isEditMode) {
+      this.orderData?.orderProducts.forEach((orderProduct) => {
+        const productFormGroup = new FormGroup({
+          product: new FormControl<Product>(
+            orderProduct.product,
+            Validators.required,
+          ),
+          quantity: new FormControl<number>(orderProduct.quantity, [
+            Validators.required,
+          ]),
+        });
+        this.productsList.push(productFormGroup);
+      });
+    }
+  }
 
   orderForm = new FormGroup({
     date: new FormControl<Date>(this.orderData?.date || new Date(), [
@@ -38,12 +63,7 @@ export class OrderModalComponent {
     client: new FormControl<Client | undefined>(this.orderData?.client, [
       Validators.required,
     ]),
-    productsList: new FormArray([
-      new FormGroup({
-        product: new FormControl<Product | null>(null, Validators.required),
-        quantity: new FormControl<number>(1, [Validators.required]),
-      }),
-    ]),
+    productsList: new FormArray([]),
   });
 
   addNewProduct() {
@@ -72,7 +92,7 @@ export class OrderModalComponent {
       date: this.orderForm.controls.date.value as Date,
       state: this.orderForm.controls.state.value as 'IN_PROGRESS' | 'COMPLETED',
       totalPrice,
-      productsList: products,
+      orderProducts: products,
       client: this.orderForm.controls.client.value as Client,
     };
 

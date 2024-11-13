@@ -3,114 +3,13 @@ import { ModalService } from '../../../../core/services/modal.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ProductModalComponent } from '../../../../shared/components/modals/product-modal/product-modal.component';
-import { Product } from '../../../../core/models/Product';
 import { Order } from '../../../../core/models/Order';
 import { Client } from '../../../../core/models/Client';
 import { ViewClientModalComponent } from '../../../../shared/components/modals/view-client-modal/view-client-modal.component';
 import { OrderProduct } from '../../../../core/models/OrderProduct';
 import { ViewOrderProductsComponent } from '../../../../shared/components/modals/view-order-products/view-order-products.component';
 import { OrderModalComponent } from '../../../../shared/components/modals/order-modal/order-modal.component';
-import { ClientsService } from '../../../../core/services/clients.service';
 import { OrdersService } from '../../../../core/services/orders.service';
-
-// TODO DA FARE PER ULTIMO (prima client)
-
-const ELEMENT_DATA_PLACEHOLDER: Order[] = [
-  {
-    id: 'o1',
-    date: new Date(),
-    state: 'IN_PROGRESS',
-    totalPrice: 333,
-    productsList: [
-      {
-        product: {
-          id: 'p1',
-          name: 'Prodotto test 1',
-          price: 100,
-          vat: 22,
-        },
-        quantity: 3,
-      },
-      {
-        product: {
-          id: 'p1',
-          name: 'Prodotto test 2',
-          price: 100,
-          vat: 22,
-        },
-        quantity: 3,
-      },
-      {
-        product: {
-          id: 'p1',
-          name: 'Prodotto test 3',
-          price: 100,
-          vat: 22,
-        },
-        quantity: 3,
-      },
-    ],
-    client: {
-      id: 'c1',
-      companyName: 'Enel',
-      streetName: 'Via Milano 22',
-      city: 'Milano',
-      province: 'MI',
-      nation: 'Italia',
-    },
-  },
-  {
-    id: 'o2',
-    date: new Date(),
-    state: 'IN_PROGRESS',
-    totalPrice: 333,
-    productsList: [
-      {
-        product: {
-          id: 'p1',
-          name: 'Prodotto test 1',
-          price: 100,
-          vat: 22,
-        },
-        quantity: 3,
-      },
-    ],
-    client: {
-      id: 'c1',
-      companyName: 'Enel',
-      streetName: 'Via Milano 22',
-      city: 'Milano',
-      province: 'MI',
-      nation: 'Italia',
-    },
-  },
-  {
-    id: 'o3',
-    date: new Date(),
-    state: 'COMPLETED',
-    totalPrice: 1000.99,
-    productsList: [
-      {
-        product: {
-          id: 'p1',
-          name: 'Prodotto test 1',
-          price: 100,
-          vat: 22,
-        },
-        quantity: 3,
-      },
-    ],
-    client: {
-      id: 'c3',
-      companyName: 'Enel',
-      streetName: 'Via Milano 22',
-      city: 'Milano',
-      province: 'MI',
-      nation: 'Italia',
-    },
-  },
-];
 
 @Component({
   selector: 'app-orders',
@@ -173,6 +72,8 @@ export class OrdersComponent {
   }
 
   onViewProducts(products: OrderProduct[]) {
+    // TODO: PRODUCTS UNDEFINED
+    console.log(products);
     this.#modalService.openModal(ViewOrderProductsComponent, products);
   }
 

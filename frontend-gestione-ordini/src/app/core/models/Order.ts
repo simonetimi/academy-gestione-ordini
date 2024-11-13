@@ -6,6 +6,24 @@ export interface Order {
   date: Date;
   state: 'IN_PROGRESS' | 'COMPLETED';
   totalPrice: number;
-  productsList: OrderProduct[];
+  orderProducts: OrderProduct[];
   client: Client;
+}
+
+export interface OrderDTO {
+  id: string;
+  date: Date;
+  state: 'IN_PROGRESS' | 'COMPLETED';
+  totalPrice: number;
+  orderProductList: OrderProductListItem[];
+  clientId: string;
+}
+
+interface OrderProductListItem {
+  productId: string;
+  quantity: number;
+}
+
+export interface OrderStateDto {
+  state: 'IN_PROGRESS' | 'COMPLETED';
 }

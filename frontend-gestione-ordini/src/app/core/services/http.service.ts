@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/Product';
 import { Client } from '../models/Client';
-import { Order } from '../models/Order';
+import { Order, OrderDTO, OrderStateDto } from '../models/Order';
 
 @Injectable({
   providedIn: 'root',
@@ -149,7 +149,7 @@ export class HttpService {
     return this.#httpClient.get<Order[]>(`${this.baseUrl}/orders`);
   }
 
-  addOrder(order: Order) {
+  addOrder(order: OrderDTO) {
     const headersWithToken = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.#token}`,
@@ -159,13 +159,17 @@ export class HttpService {
     });
   }
 
-  updateOrder(order: Order) {
+  updateOrder(orderStateDto: OrderStateDto, orderId: string) {
     const headersWithToken = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.#token}`,
     });
-    return this.#httpClient.put<Order>(`${this.baseUrl}/orders`, order, {
-      headers: headersWithToken,
-    });
+    return this.#httpClient.put<Order>(
+      `${this.baseUrl}/orders/${orderId}`,
+      orderStateDto,
+      {
+        headers: headersWithToken,
+      },
+    );
   }
 }
