@@ -1,0 +1,63 @@
+<div class="modal-container">
+  <form class="modal-form" [formGroup]="orderForm" (ngSubmit)="onOrderSubmit()">
+    @if (isEditMode) {
+      <mat-form-field>
+        <mat-label>Stato</mat-label>
+        <mat-select formControlName="state">
+          <mat-option value="IN_PROGRESS">In elaborazione</mat-option>
+          <mat-option value="COMPLETED">Completato</mat-option>
+        </mat-select>
+      </mat-form-field>
+    } @else {
+      <mat-form-field>
+        <mat-label>Data ordine</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Stato</mat-label>
+        <mat-select formControlName="state">
+          <mat-option value="IN_PROGRESS">In elaborazione</mat-option>
+          <mat-option value="COMPLETED">Completato</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="client">
+          @for (client of clients; track client.id) {
+            <mat-option [value]="client.id">{{
+              client.companyName
+            }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!--
+      <button type="button" mat-flat-button (click)="addNewProduct()">
+        Aggiungi nuovo prodotto
+      </button>
+
+      <div formArrayName="productsList" class="new-product-container">
+        @for (
+          product of productsList.controls;
+          track product;
+          let idx = $index
+        ) {
+          <mat-form-field>
+            <mat-label>Quantità</mat-label>
+            <input matInput [formControlName]="idx" />
+          </mat-form-field>
+        }
+      </div>
+          -->
+    }
+
+    <button mat-flat-button>
+      {{ isEditMode ? "Modifica" : "Aggiungi" }} ordine
+    </button>
+  </form>
+</div>

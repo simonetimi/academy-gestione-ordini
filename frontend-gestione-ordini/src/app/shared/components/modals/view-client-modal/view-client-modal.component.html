@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>{{ clientData.companyName }}</h2>
+  <mat-divider />
+  <mat-list>
+    <mat-list-item> {{ clientData.streetName }}</mat-list-item>
+    <mat-list-item>{{
+      clientData.city + ", " + clientData.province
+    }}</mat-list-item>
+    <mat-list-item>{{ clientData.nation }}</mat-list-item>
+  </mat-list>
+</div>

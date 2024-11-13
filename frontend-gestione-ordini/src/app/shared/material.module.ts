@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [],
@@ -23,6 +26,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTabsModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
+    MatDividerModule,
+    MatDatepickerModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -34,6 +40,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTabsModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
+    MatDividerModule,
+    MatDatepickerModule,
   ],
 })
 export class MaterialModule {}

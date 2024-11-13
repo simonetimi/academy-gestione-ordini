@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Prodotti ordinati</h2>
+  <mat-list>
+    @for (product of productsData; track product; let last = $last) {
+      <mat-list-item>
+        {{ product.product.name }}
+      </mat-list-item>
+      <mat-list-item>Quantità: {{ product.quantity }} </mat-list-item>
+      <mat-list-item
+        >Prezzo unitario: {{ product.product.price }}
+      </mat-list-item>
+      @if (!last) {
+        <mat-divider />
+      }
+    }
+  </mat-list>
+</div>

@@ -1,41 +1,84 @@
 <h2>Ordini</h2>
-<button class="add-button" mat-flat-button>Aggiungi ordine</button>
+<button class="add-button" mat-flat-button (click)="onClickAdd()">
+  Aggiungi ordine
+</button>
 <div class="table-wrapper mat-elevation-z2">
   <table mat-table [dataSource]="dataSource" matSort>
-    <!-- Name Column -->
-    <ng-container matColumnDef="companyName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
-      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
-    </ng-container>
-
-    <!-- Price Column -->
-    <ng-container matColumnDef="streetName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo</th>
-      <td mat-cell *matCellDef="let product">
-        {{ product.price | currency: "EUR" }}
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.id.substring(0, 5) + "..." }}
       </td>
     </ng-container>
 
-    <!-- Vat Column -->
-    <ng-container matColumnDef="city">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
-      <td mat-cell *matCellDef="let product">{{ product.vat }}</td>
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.date | date }}
+      </td>
     </ng-container>
 
-    <!-- Vat Column -->
-    <ng-container matColumnDef="provinceAndNation">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>IVA</th>
-      <td mat-cell *matCellDef="let product">{{ product.vat }}</td>
+    <!-- State Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stato</th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.state === "IN_PROGRESS" ? "In elaborazione" : "Completato" }}
+      </td>
+    </ng-container>
+
+    <!-- TotalPrice Column -->
+    <ng-container matColumnDef="totalPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prezzo totale</th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.totalPrice | currency: "EUR" }}
+      </td>
+    </ng-container>
+
+    <!-- Products Column -->
+    <ng-container matColumnDef="products">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prodotti</th>
+      <td mat-cell *matCellDef="let order">
+        <div class="text-button">
+          <button
+            (click)="onViewProducts(order.productsList)"
+            mat-mini-fab
+            aria-label="Visualizza prodotti"
+            class="icon-button"
+          >
+            <mat-icon>apps</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Client Column -->
+    <ng-container matColumnDef="client">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
+      <td mat-cell *matCellDef="let order">
+        <div class="text-button">
+          {{ order.client.companyName }}
+          <button
+            (click)="onViewClient(order.client)"
+            mat-mini-fab
+            aria-label="Visualizza cliente"
+            class="icon-button"
+          >
+            <mat-icon>person</mat-icon>
+          </button>
+        </div>
+      </td>
     </ng-container>
 
     <!-- Edit Column -->
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef>Modifica</th>
-      <td mat-cell *matCellDef="let product">
+      <td mat-cell *matCellDef="let order">
         <button
-          (click)="onClickEdit(product)"
+          (click)="onClickEdit(order)"
           mat-mini-fab
-          aria-label="Modifica prodotto"
+          aria-label="Modifica ordine"
           class="icon-button"
         >
           <mat-icon>edit</mat-icon>

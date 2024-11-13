@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { Client } from '../../../../core/models/Client';
 import { ClientModalComponent } from '../../../../shared/components/modals/client-modal/client-modal.component';
 
-const ELEMENT_DATA_PLACEHOLDER: Client[] = [
+export const ELEMENT_DATA_PLACEHOLDER: Client[] = [
   {
     id: 'c1',
     companyName: 'Enel',

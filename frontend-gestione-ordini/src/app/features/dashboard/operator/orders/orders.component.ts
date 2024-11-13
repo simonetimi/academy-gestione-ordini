@@ -5,50 +5,108 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ProductModalComponent } from '../../../../shared/components/modals/product-modal/product-modal.component';
 import { Product } from '../../../../core/models/Product';
+import { Order } from '../../../../core/models/Order';
 import { Client } from '../../../../core/models/Client';
+import { ViewClientModalComponent } from '../../../../shared/components/modals/view-client-modal/view-client-modal.component';
+import { OrderProduct } from '../../../../core/models/OrderProduct';
+import { ViewOrderProductsComponent } from '../../../../shared/components/modals/view-order-products/view-order-products.component';
+import { OrderModalComponent } from '../../../../shared/components/modals/order-modal/order-modal.component';
 
 // TODO DA FARE PER ULTIMO (prima client)
 
-const ELEMENT_DATA_PLACEHOLDER: Client[] = [
+const ELEMENT_DATA_PLACEHOLDER: Order[] = [
   {
-    id: 'c1',
-    companyName: 'Enel',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
+    id: 'o1',
+    date: new Date(),
+    state: 'IN_PROGRESS',
+    totalPrice: 333,
+    productsList: [
+      {
+        product: {
+          id: 'p1',
+          name: 'Prodotto test 1',
+          price: 100,
+          vat: 22,
+        },
+        quantity: 3,
+      },
+      {
+        product: {
+          id: 'p1',
+          name: 'Prodotto test 2',
+          price: 100,
+          vat: 22,
+        },
+        quantity: 3,
+      },
+      {
+        product: {
+          id: 'p1',
+          name: 'Prodotto test 3',
+          price: 100,
+          vat: 22,
+        },
+        quantity: 3,
+      },
+    ],
+    client: {
+      id: 'c1',
+      companyName: 'Enel',
+      streetName: 'Via Milano 22',
+      city: 'Milano',
+      province: 'MI',
+      nation: 'Italia',
+    },
   },
   {
-    id: 'c2',
-    companyName: 'Bartolini',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
+    id: 'o2',
+    date: new Date(),
+    state: 'IN_PROGRESS',
+    totalPrice: 333,
+    productsList: [
+      {
+        product: {
+          id: 'p1',
+          name: 'Prodotto test 1',
+          price: 100,
+          vat: 22,
+        },
+        quantity: 3,
+      },
+    ],
+    client: {
+      id: 'c1',
+      companyName: 'Enel',
+      streetName: 'Via Milano 22',
+      city: 'Milano',
+      province: 'MI',
+      nation: 'Italia',
+    },
   },
   {
-    id: 'c3',
-    companyName: 'Nessuno',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c4',
-    companyName: 'BIC',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
-  },
-  {
-    id: 'c5',
-    companyName: 'Baguette & CO',
-    streetName: 'Via Milano 22',
-    city: 'Milano',
-    province: 'MI',
-    nation: 'Italia',
+    id: 'o3',
+    date: new Date(),
+    state: 'COMPLETED',
+    totalPrice: 1000.99,
+    productsList: [
+      {
+        product: {
+          id: 'p1',
+          name: 'Prodotto test 1',
+          price: 100,
+          vat: 22,
+        },
+        quantity: 3,
+      },
+    ],
+    client: {
+      id: 'c3',
+      companyName: 'Enel',
+      streetName: 'Via Milano 22',
+      city: 'Milano',
+      province: 'MI',
+      nation: 'Italia',
+    },
   },
 ];
 
@@ -60,10 +118,12 @@ const ELEMENT_DATA_PLACEHOLDER: Client[] = [
 export class OrdersComponent {
   #modalService: ModalService = inject(ModalService);
   displayedColumns: string[] = [
-    'companyName',
-    'streetName',
-    'city',
-    'provinceAndNation',
+    'id',
+    'date',
+    'state',
+    'totalPrice',
+    'products',
+    'client',
     'edit',
   ];
 
@@ -82,19 +142,27 @@ export class OrdersComponent {
   }
 
   onClickAdd() {
-    this.#modalService.openModal(ProductModalComponent).subscribe({
+    this.#modalService.openModal(OrderModalComponent).subscribe({
       next: (result) => console.log(result),
       // TODO chiama service se result esiste (per fare chiamata http/agg stato)
       //  result ? this.#stateService.addColleague(result) : null,
     });
   }
 
-  onClickEdit(product: Product) {
-    this.#modalService.openModal(ProductModalComponent, product).subscribe({
+  onClickEdit(order: Order) {
+    this.#modalService.openModal(OrderModalComponent, order).subscribe({
       next: (result) => console.log(result),
       // TODO chiama service se result esiste (per fare chiamata http/agg stato)
       //  result ? this.#stateService.addColleague(result) : null,
     });
+  }
+
+  onViewProducts(products: OrderProduct[]) {
+    this.#modalService.openModal(ViewOrderProductsComponent, products);
+  }
+
+  onViewClient(client: Client) {
+    this.#modalService.openModal(ViewClientModalComponent, client);
   }
 
   // TODO prendi data source da servizio prodotti (chiamata http)
