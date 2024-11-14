@@ -44,18 +44,18 @@ public class ProductService {
 	@Transactional
 	public Product updateProduct(Product p) throws EntityNotFoundException {
 		String productId = p.getId();
-		Optional<Product> product = productRepository.findById(productId);
-		if (!productRepository.existsById(productId)) {
+		Optional<Product> productOptional = productRepository.findById(productId);
+		if (productOptional.isEmpty()) {
 			throw new EntityNotFoundException("Id " + productId + " not found!");
 		}
-		p.setCurrent(false);
-		productRepository.save(p);
+		Product oldProduct = productOptional.get();
+		oldProduct.setCurrent(false);
+		productRepository.save(oldProduct);
 
-		Product newProduct = p;
-		newProduct.setId(null);
-		newProduct.setCurrent(true);
+		p.setId(null);
+		p.setCurrent(true);
 
-		return productRepository.save(newProduct);
+		return productRepository.save(p);
 
 	}
 }
