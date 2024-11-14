@@ -12,6 +12,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [],
@@ -29,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatListModule,
     MatDividerModule,
     MatDatepickerModule,
+    MatCardModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -43,6 +45,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatListModule,
     MatDividerModule,
     MatDatepickerModule,
+    MatCardModule,
   ],
 })
 export class MaterialModule {}
