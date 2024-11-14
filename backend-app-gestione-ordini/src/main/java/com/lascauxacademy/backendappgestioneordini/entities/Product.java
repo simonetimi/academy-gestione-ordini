@@ -26,6 +26,9 @@ public class Product {
 
     @Column
     private int vat = 22;
+    
+    @Column(name = "is_current")	
+    private boolean isCurrent = true;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

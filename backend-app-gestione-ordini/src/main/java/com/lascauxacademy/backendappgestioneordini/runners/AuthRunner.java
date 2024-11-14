@@ -22,7 +22,6 @@ public class AuthRunner implements ApplicationRunner{
     // method that executes on application startup
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		// TODO Auto-generated method stub
 		//setRoleDefault(); // run method only once, if DB is empty
 	}
 	
