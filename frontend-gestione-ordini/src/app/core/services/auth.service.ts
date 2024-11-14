@@ -34,7 +34,7 @@ export class AuthService {
       this.isTokenExpired = false;
       this.isAuthenticated = true;
       this.userRole = user.role;
-      if(user.role == "ROLE_ADMIN") {
+      if (user.role == 'ROLE_ADMIN') {
         this.#router.navigate(['dashboard/', 'admin']);
       } else {
         this.#router.navigate(['dashboard/', 'operator']);
@@ -67,12 +67,11 @@ export class AuthService {
         if (user.role) {
           this.userRole = user.role;
         }
-        if(user.role == "ROLE_ADMIN") {
+        if (user.role == 'ROLE_ADMIN') {
           this.#router.navigate(['dashboard/', 'admin']);
         } else {
           this.#router.navigate(['dashboard/', 'operator']);
-
-      }
+        }
       },
       error: (err) => {
         this.#notificationService.sendNotification(
@@ -85,17 +84,17 @@ export class AuthService {
   signup(username: string, email: string, password: string) {
     this.#httpService.signup(username, email, password).subscribe({
       next: (_value: HttpResponse<any>) => {
-          this.#notificationService.sendSuccessNotification(
-            `Registrazione avvenuta con successo!`,
-          );
-          this.#router.navigate(['auth', 'login']);
-
+        this.#notificationService.sendSuccessNotification(
+          `Registrazione avvenuta con successo!`,
+        );
+        this.#router.navigate(['auth', 'login']);
       },
       error: (err) => {
         console.log(err);
-        this.#notificationService.sendErrorNotification(
-          `Errore registrazione: ${err.message}`,
-        );
+        let message = 'Errore registrazione: ${err.message}';
+        if (err.status === 409) {
+        }
+        this.#notificationService.sendErrorNotification(message);
       },
     });
   }
