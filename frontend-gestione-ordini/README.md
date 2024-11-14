@@ -9,9 +9,7 @@
 
 ### Autenticazione
 
-L'utente può eseguire la registrazione come operatore.
-Nel momento del login, viene eseguita l'autenticazione tramite token JWT.
-
+L'utente può registrarsi come operatore o admin.
 A seconda del ruolo restituito dal database, è precluso ad admin l'accesso delle aree dedicate a operatore, e viceversa.
 
 ### Dashboard
@@ -29,7 +27,7 @@ I form (reactive) hanno validation per ogni campo.
 
 ### Pipes
 
-È stata creata una pipe per il calcolo dell'IVA nel prezzo.
+È stata creata una custom pipe per il calcolo dell'IVA nel prezzo.
 La pipe accetta un array di due number: prezzo, iva. Il valore di ritorno è il prezzo con l'IVA.
 
 ### Lingua
@@ -43,3 +41,9 @@ La pipe accetta un array di due number: prezzo, iva. Il valore di ritorno è il 
 La modifica dei prodotti avviene mantenendo i vecchi prodotti, e flaggandoli come non più "current".
 Questo permette di mantenere il prezzo e il nome corretto dei prodotti negli ordini effettuati prima della modifica.
 
+### Autenticazione
+
+L'autenticazione avviene tramite token JWT. Il token ha una durata di 10 ore.
+Gli endpoint dell'API sono protetti dietro autenticazione, mentre le operazioni CRUD (tranne READ) richiedono anche un ruolo specifico
+
+### 
