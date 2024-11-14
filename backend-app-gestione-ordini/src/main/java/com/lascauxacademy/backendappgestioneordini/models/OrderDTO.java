@@ -16,5 +16,8 @@ public class OrderDTO {
 
 	private List<OrderProductDTO> orderProductList;
 
-	private double totalPrice;
+	private double totalPriceWithVat;
+	
+    private double totalPriceNoVat;
+
 }

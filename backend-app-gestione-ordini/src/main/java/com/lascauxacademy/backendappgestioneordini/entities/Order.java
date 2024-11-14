@@ -30,8 +30,11 @@ public class Order {
     @Column(name = "products_list")
     private List<OrderProduct> orderProducts;
 
-    @Column(name = "total_price", nullable = false)
-    private double totalPrice;
+    @Column(name = "total_price_with_vat", nullable = false)
+    private double totalPriceWithVat;
+    
+    @Column(name = "total_price_no_vat", nullable = false)
+    private double totalPriceNoVat;
 
     @ManyToOne
     @JoinColumn(name = "client_id")

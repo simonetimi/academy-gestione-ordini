@@ -72,7 +72,8 @@ public class OrderService {
 		}
 
 		order.setClient(clientOptional.get());
-		order.setTotalPrice(orderDTO.getTotalPrice());
+		order.setTotalPriceNoVat(orderDTO.getTotalPriceNoVat());
+		order.setTotalPriceWithVat(orderDTO.getTotalPriceWithVat());
 		order.setOrderProducts(orderProductList);
 		order.setDate(LocalDateTime.now());
 

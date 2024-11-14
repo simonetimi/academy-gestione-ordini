@@ -4,9 +4,8 @@
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input [formControl]="username" name="username" matInput  [value]="passedUsername"/>
-      <!--
-      <mat-error>Please enter a valid email address</mat-error>
-      -->
+      <mat-hint  *ngIf="loginForm.controls.username.touched && loginForm.controls.username.invalid">Username obbligatorio</mat-hint>
+
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
@@ -17,7 +16,8 @@
         type="password"
         matInput
       />
+      <mat-hint *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">Password obbligatorio, min 4 caratteri</mat-hint>
     </mat-form-field>
-    <button mat-flat-button>Login</button>
+    <button mat-flat-button [disabled]="!loginForm.valid" >Login</button>
   </form>
 </div>
