@@ -14,7 +14,14 @@ import { ProductsService } from '../../../core/services/products.service';
 })
 export class AdminComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
-  displayedColumns: string[] = ['name', 'price', 'vat', 'edit', 'delete'];
+  displayedColumns: string[] = [
+    'name',
+    'priceNoVat',
+    'vat',
+    'priceVat',
+    'edit',
+    'delete',
+  ];
   #productsService = inject(ProductsService);
 
   dataSource = new MatTableDataSource();
