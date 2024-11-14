@@ -40,6 +40,9 @@ La pipe accetta un array di due number: prezzo, iva. Il valore di ritorno è il 
 
 La modifica dei prodotti avviene mantenendo i vecchi prodotti, e flaggandoli come non più "current".
 Questo permette di mantenere il prezzo e il nome corretto dei prodotti negli ordini effettuati prima della modifica.
+Stesso meccanismo per eliminare i prodotti: se si vuole eliminare un prodotto, viene flaggato come current:false,
+così gli ordini già effettuati con quel prodotto vengono mantenuti. 
+
 
 ### Autenticazione
 

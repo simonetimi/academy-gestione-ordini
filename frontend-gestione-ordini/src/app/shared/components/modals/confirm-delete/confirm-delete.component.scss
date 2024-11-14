@@ -3,3 +3,10 @@
   gap: 1rem;
   justify-content: space-between;
 }
+
+.modal-container {
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
