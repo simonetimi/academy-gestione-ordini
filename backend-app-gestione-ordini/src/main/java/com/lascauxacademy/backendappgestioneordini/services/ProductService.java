@@ -31,10 +31,12 @@ public class ProductService {
 
     @Transactional
     public void deleteProduct(String productId) throws EntityNotFoundException {
-        Optional<Product> product = productRepository.findById(productId);
-        if (product.isEmpty())
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (productOptional.isEmpty())
             throw new EntityNotFoundException("Id " + productId + " not found!");
-        productRepository.deleteById(productId);
+        Product product = productOptional.get();
+        product.setCurrent(false);
+        productRepository.save(product);
     }
 
     // setta il vecchio prodotto come current = false e crea un nuovo prodotto con i dati modificati dall'admin
