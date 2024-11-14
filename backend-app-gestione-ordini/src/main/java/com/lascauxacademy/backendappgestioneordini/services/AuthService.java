@@ -24,91 +24,92 @@ import jakarta.persistence.EntityExistsException;
 
 @Service
 public class AuthService {
-	private AuthenticationManager authenticationManager;
-	private UserRepository userRepository;
-	private RoleRepository roleRepository;
-	PasswordEncoder passwordEncoder;
-	private JwtTokenProvider jwtTokenProvider;
+    private AuthenticationManager authenticationManager;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
-	public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository,
-			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
-		this.authenticationManager = authenticationManager;
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.jwtTokenProvider = jwtTokenProvider;
-	}
+    public AuthService(AuthenticationManager authenticationManager,
+                       UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       PasswordEncoder passwordEncoder,
+                       JwtTokenProvider jwtTokenProvider) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
-	public String login(LoginDto loginDto) {
+    public String login(LoginDto loginDto) {
 
         // create an authentication token using the provided username and password
-		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
-		System.out.println(authentication);
-		
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+
         // set the authentication in the security context
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // generate a JWT token for the authenticated user
-		String token = jwtTokenProvider.generateToken(authentication);
-		System.out.println(token);
-		return token;
-	}
+        String token = jwtTokenProvider.generateToken(authentication);
+        return token;
+    }
 
-	public String register(RegisterDto registerDto) throws Exception {
-		
-		if( userRepository.existsByUsername(registerDto.getUsername())) {
-			throw new EntityExistsException("username_exists");
-		}
-		
-		if( userRepository.existsByEmail(registerDto.getEmail())) {
-			throw new EntityExistsException("email_exists");
-		}
-		
-		User user = new User();
-		user.setUsername(registerDto.getUsername());
-		user.setEmail(registerDto.getEmail());
-		
+    public String register(RegisterDto registerDto) throws Exception {
+
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+            throw new EntityExistsException("username_exists");
+        }
+
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
+            throw new EntityExistsException("email_exists");
+        }
+
+        User user = new User();
+        user.setUsername(registerDto.getUsername());
+        user.setEmail(registerDto.getEmail());
+
         // encode the user's password before saving
-		user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-		Set<Role> roles = new HashSet<>();
+        Set<Role> roles = new HashSet<>();
 
         // if roles are provided in the registration data, find and add them to the user's roles
-		if(registerDto.getRoles() != null && registerDto.getRoles().contains("admin")) {
-			Role userRole = roleRepository.findByRoleName(ERole.ROLE_ADMIN).get();
-			roles.add(userRole);
-		} else {
-			Role userRole = roleRepository.findByRoleName(ERole.ROLE_OPERATOR).get();
-			roles.add(userRole);
-		}
+        if (registerDto.getRoles() != null && registerDto.getRoles().contains("admin")) {
+            Role userRole = roleRepository.findByRoleName(ERole.ROLE_ADMIN).get();
+            roles.add(userRole);
+        } else {
+            Role userRole = roleRepository.findByRoleName(ERole.ROLE_OPERATOR).get();
+            roles.add(userRole);
+        }
 
-		user.setRoles(roles);
-		userRepository.save(user);
+        user.setRoles(roles);
+        userRepository.save(user);
 
-		return "User registered successfully!.";
-	}
+        return "User registered successfully!.";
+    }
 
     // helper method to convert a role string to the corresponding enum type
-	public ERole getRole(String role) {
-		if (role.equals("ADMIN"))
-			return ERole.ROLE_ADMIN;
-		else
-			return ERole.ROLE_OPERATOR;
-	}
+    public ERole getRole(String role) {
+        if (role.equals("ADMIN"))
+            return ERole.ROLE_ADMIN;
+        else
+            return ERole.ROLE_OPERATOR;
+    }
 
     // method to retrieve the role of a user based on their username
-	public String userRole(String username) throws Exception {
-		User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
+    public String userRole(String username) throws Exception {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
 
-		Set<Role> roles = user.getRoles();
-		if (roles.isEmpty()) {
-			throw new Exception("No roles found for the user");
-		}
+        Set<Role> roles = user.getRoles();
+        if (roles.isEmpty()) {
+            throw new Exception("No roles found for the user");
+        }
 
         // return the name of the first role in the user's role set as a string
-		Role role = roles.iterator().next();
-		return role.getRoleName().name();
-	}
+        Role role = roles.iterator().next();
+        return role.getRoleName().name();
+    }
 
 }

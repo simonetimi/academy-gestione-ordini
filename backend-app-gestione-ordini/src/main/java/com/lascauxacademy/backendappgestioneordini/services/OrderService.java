@@ -85,7 +85,6 @@ public class OrderService {
         if (orderOptional.isEmpty())
             throw new EntityNotFoundException("Order with id " + orderId + " not found.");
         Order order = orderOptional.get();
-        System.out.println(status);
         if (status.state.equals("COMPLETED")) {
             order.setState(OrderState.COMPLETED);
         } else if (status.state.equals("IN_PROGRESS")) {

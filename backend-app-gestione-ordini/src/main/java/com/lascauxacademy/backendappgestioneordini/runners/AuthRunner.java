@@ -13,39 +13,41 @@ import com.lascauxacademy.backendappgestioneordini.services.AuthService;
 
 @Component
 public class AuthRunner implements ApplicationRunner {
-	// this component automatically runs some setup code when the application starts
+    // this component automatically runs some setup code when the application starts
 
-	@Autowired
-	RoleRepository roleRepository;
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	AuthService authService;
+    RoleRepository roleRepository;
+    UserRepository userRepository;
+    AuthService authService;
 
-	// method that executes on application startup
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		setRoleDefault(); 
-	}
+    public AuthRunner(RoleRepository roleRepository, UserRepository userRepository, AuthService authService) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.authService = authService;
+    }
 
-	// method to set up default roles in the database
-	private void setRoleDefault() {
-		// create and save the admin role in the database
-		if (!roleRepository.existsByRoleName(ERole.ROLE_ADMIN)) {
-			Role admin = new Role();
-			admin.setRoleName(ERole.ROLE_ADMIN);
-			roleRepository.save(admin);
-		}
+    // method that executes on application startup
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        setRoleDefault();
+    }
 
-		// create and save the operator role in the database
-		if (!roleRepository.existsByRoleName(ERole.ROLE_OPERATOR)) {
-			Role operator = new Role();
-			operator.setRoleName(ERole.ROLE_OPERATOR);
-			roleRepository.save(operator);
-		}
+    // method to set up default roles in the database
+    private void setRoleDefault() {
+        // create and save the admin role in the database
+        if (!roleRepository.existsByRoleName(ERole.ROLE_ADMIN)) {
+            Role admin = new Role();
+            admin.setRoleName(ERole.ROLE_ADMIN);
+            roleRepository.save(admin);
+        }
 
-	}
-	
-	
+        // create and save the operator role in the database
+        if (!roleRepository.existsByRoleName(ERole.ROLE_OPERATOR)) {
+            Role operator = new Role();
+            operator.setRoleName(ERole.ROLE_OPERATOR);
+            roleRepository.save(operator);
+        }
+
+    }
+
 
 }
