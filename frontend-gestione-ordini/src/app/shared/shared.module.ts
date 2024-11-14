@@ -9,7 +9,10 @@ import { ClientModalComponent } from './components/modals/client-modal/client-mo
 import { ViewClientModalComponent } from './components/modals/view-client-modal/view-client-modal.component';
 import { OrderModalComponent } from './components/modals/order-modal/order-modal.component';
 import { ViewOrderProductsComponent } from './components/modals/view-order-products/view-order-products.component';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { VatPipe } from './pipes/vat.pipe';
 
 @NgModule({
