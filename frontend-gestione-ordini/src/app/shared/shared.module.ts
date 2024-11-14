@@ -10,6 +10,7 @@ import { ViewClientModalComponent } from './components/modals/view-client-modal/
 import { OrderModalComponent } from './components/modals/order-modal/order-modal.component';
 import { ViewOrderProductsComponent } from './components/modals/view-order-products/view-order-products.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { VatPipe } from './pipes/vat.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,13 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ViewClientModalComponent,
     ViewOrderProductsComponent,
   ],
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    RouterLink,
+    VatPipe,
+  ],
   exports: [
     MaterialModule,
     ReactiveFormsModule,

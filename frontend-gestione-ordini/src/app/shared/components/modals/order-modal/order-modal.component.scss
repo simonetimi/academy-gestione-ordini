@@ -1,6 +1,5 @@
 :host {
   width: 400px;
-  padding: 2rem;
 }
 
 buttom {
@@ -11,6 +10,8 @@ buttom {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  max-height: 40vh;
+  overflow-y: auto;
 }
 
 .new-product-container > div {
