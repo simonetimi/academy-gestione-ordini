@@ -1,6 +1,6 @@
-section {
-  width: 100vw;
-  height: 100vh;
+:host {
   display: flex;
-  justify-content: start;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 0.2rem;
 }

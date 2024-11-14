@@ -1,4 +1,4 @@
-import { Component, inject, OnChanges, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
@@ -15,7 +15,7 @@ export class AuthButtonComponent implements OnInit {
   router: Router = inject(Router);
   url: string = '';
 
-  // tracks curent url the render the correct button
+  // traccia l'url corrente per renderizzare i pulsanti corretti
   ngOnInit() {
     this.router.events
       .pipe(filter((value) => value instanceof NavigationEnd))

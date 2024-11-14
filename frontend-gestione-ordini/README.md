@@ -1,27 +1,31 @@
-# FrontendGestioneOrdini
+# Applicativo Gestione Ordini
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
+## Funzionalità
 
-## Development server
+### Ruoli
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Admin: creati, modifica o elimina prodotti
+- Operatore: crea ordini e ne modifica lo stato. Aggiunge o modifica clienti.
 
-## Code scaffolding
+## Autenticazione
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+L'utente può eseguire la registrazione come operatore.
+Nel momento del login, viene eseguita l'autenticazione tramite token JWT.
 
-## Build
+A seconda del ruolo restituito dal database, è precluso ad admin l'accesso delle aree dedicate a operatore, e viceversa.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Dashboard
 
-## Running unit tests
+Le AuthGuard eseguono il ridirezionamento alla dashboard corretta, e prevengono l'accesso alle aree precluse.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Gestione prodotti
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+La modifica dei prodotti avviene mantenendo i vecchi prodotti, e flaggandoli come non più "current".
+Questo permette di mantenere il prezzo e il nome corretto dei prodotti negli ordini effettuati prima della modifica.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Services
+
+Ogni service è responsabile di una parte dell'applicazione: autenticazione, notifiche, persistenza, http
+Alcuni service gestiscono lo stato dei dati dell'applicazione: ordini, prodotti, clienti.

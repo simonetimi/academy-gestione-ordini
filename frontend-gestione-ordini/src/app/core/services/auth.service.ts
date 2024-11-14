@@ -74,7 +74,7 @@ export class AuthService {
         }
       },
       error: (err) => {
-        this.#notificationService.sendNotification(
+        this.#notificationService.sendErrorNotification(
           `Errore login: ${err.message}`,
         );
       },

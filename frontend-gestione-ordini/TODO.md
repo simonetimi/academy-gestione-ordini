@@ -21,9 +21,6 @@
 - [x] Dashboard operatore: ordini
 
 
-- [ ] Dark mode (optional)
-
-
 
 dashboard admin
 - [x] tabella crud prodotti
