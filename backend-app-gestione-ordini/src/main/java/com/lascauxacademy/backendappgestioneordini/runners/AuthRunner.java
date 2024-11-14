@@ -12,31 +12,34 @@ import com.lascauxacademy.backendappgestioneordini.repositories.UserRepository;
 import com.lascauxacademy.backendappgestioneordini.services.AuthService;
 
 @Component
-public class AuthRunner implements ApplicationRunner{
-	// this component automatically runs some setup code when the application starts
+public class AuthRunner implements ApplicationRunner {
+    // this component automatically runs some setup code when the application starts
 
-	@Autowired RoleRepository roleRepository;
-	@Autowired UserRepository userRepository;
-	@Autowired AuthService authService;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    AuthService authService;
 
     // method that executes on application startup
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		//setRoleDefault(); // run method only once, if DB is empty
-	}
-	
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        //setRoleDefault(); // run method only once, if DB is empty
+    }
+
     // method to set up default roles in the database
-	private void setRoleDefault() {
+    private void setRoleDefault() {
         // create and save the admin role in the database
-		Role admin = new Role();
-		admin.setRoleName(ERole.ROLE_ADMIN);
-		roleRepository.save(admin);
-		
+        Role admin = new Role();
+        admin.setRoleName(ERole.ROLE_ADMIN);
+        roleRepository.save(admin);
+
         // create and save the operator role in the database
-		Role operator = new Role();
-		operator.setRoleName(ERole.ROLE_OPERATOR);
-		roleRepository.save(operator);
-		
-	}
+        Role operator = new Role();
+        operator.setRoleName(ERole.ROLE_OPERATOR);
+        roleRepository.save(operator);
+
+    }
 
 }
