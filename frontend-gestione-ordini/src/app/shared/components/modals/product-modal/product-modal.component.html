@@ -26,9 +26,20 @@
         >Inserire prezzo maggior di 0</mat-hint
       >
     </mat-form-field>
+
     <mat-form-field>
-      <mat-label>IVA</mat-label>
-      <input formControlName="vat" type="tel" matInput />
+      <mat-label>Iva</mat-label>
+      <mat-select formControlName="vat" required>
+<!--        <mat-option>&#45;&#45;</mat-option>-->
+        @for (vat of varArray; track vat) {
+          <mat-option [value]="vat">{{vat}}</mat-option>
+        }
+      </mat-select>
+      @if (productForm.hasError('required')) {
+        <mat-error>
+          Scegli Iva
+        </mat-error>
+      }
     </mat-form-field>
     <button mat-flat-button>
       {{ isEditMode ? "Modifica" : "Aggiungi" }} prodotto
