@@ -5,6 +5,9 @@
 .container {
   width: 400px;
   padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 
 h2 {
