@@ -75,13 +75,10 @@ public class AuthService {
 		Set<Role> roles = new HashSet<>();
 
         // if roles are provided in the registration data, find and add them to the user's roles
-		if (registerDto.getRoles() != null) {
-			registerDto.getRoles().forEach(role -> {
-				Role userRole = roleRepository.findByRoleName(getRole(role)).get();
-				roles.add(userRole);
-			});
+		if(registerDto.getRoles() != null && registerDto.getRoles().contains("admin")) {
+			Role userRole = roleRepository.findByRoleName(ERole.ROLE_ADMIN).get();
+			roles.add(userRole);
 		} else {
-            // if no roles are provided, assign the default role "ROLE_OPERATOR"
 			Role userRole = roleRepository.findByRoleName(ERole.ROLE_OPERATOR).get();
 			roles.add(userRole);
 		}

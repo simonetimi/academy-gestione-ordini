@@ -20,9 +20,5 @@ public class RegisterDto {
 
 	private String password;
 
-	private String token;
-
-	private Date tokenExpireDate;
-
 	private Set<String> roles;
 }
