@@ -91,7 +91,7 @@ export class OrderModalComponent implements OnInit {
     const totalPriceWithVat = products.reduce((acc, orderProduct) => {
       const percentageVat = orderProduct.product.vat / 100;
       const orderProductPriceWithVat =
-        percentageVat * orderProduct.product.price;
+        percentageVat * orderProduct.product.price + orderProduct.product.price;
       return orderProduct.quantity * orderProductPriceWithVat + acc;
     }, 0);
 

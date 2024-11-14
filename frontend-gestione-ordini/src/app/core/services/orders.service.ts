@@ -24,6 +24,10 @@ export class OrdersService {
     return this.#orders$.asObservable();
   }
 
+  get ordersBehaviorSubject() {
+    return this.#orders$;
+  }
+
   addOrder(order: Order) {
     // dto per matchare il dto che richiede il backend (manda i prodotti e il cliente solo come ID)
     const orderDto: OrderDTO = {

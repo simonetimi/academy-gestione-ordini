@@ -28,7 +28,7 @@ export class OrdersComponent {
     'id',
     'date',
     'state',
-    'totalPrice',
+    'totalPriceWithVat',
     'products',
     'client',
     'edit',
