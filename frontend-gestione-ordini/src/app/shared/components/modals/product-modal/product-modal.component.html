@@ -7,10 +7,14 @@
     <mat-form-field>
       <mat-label>Nome</mat-label>
       <input formControlName="name" matInput />
+      <mat-hint  *ngIf="productForm.controls.price.touched && productForm.controls.price.invalid">nome obbligatorio</mat-hint>
+
     </mat-form-field>
     <mat-form-field>
       <mat-label>Prezzo</mat-label>
-      <input formControlName="price" type="tel" matInput />
+      <input formControlName="price" type="number" matInput />
+      <mat-hint  *ngIf="productForm.controls.price.touched && productForm.controls.price.invalid">inserire prezzo maggior di 0</mat-hint>
+
     </mat-form-field>
     <mat-form-field>
       <mat-label>IVA</mat-label>

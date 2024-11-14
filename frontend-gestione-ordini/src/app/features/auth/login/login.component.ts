@@ -20,7 +20,7 @@ export class LoginComponent {
   passedPassword: string | null = this.#authService.userLogin.value?.password!;
   loginForm = this.#formBuilder.group({
     username: [this.passedUsername, [Validators.required]],
-    password: [this.passedPassword, [Validators.required]],
+    password: [this.passedPassword, [Validators.required, Validators.minLength(4)]],
   });
 
   login() {

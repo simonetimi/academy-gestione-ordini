@@ -1,13 +1,16 @@
 <div class="form-container">
   <h2>Registrazione</h2>
   <form class="auth-form" (ngSubmit)="signup()" [formGroup]="signupForm">
-    <mat-form-field>
+    <mat-form-field >
       <mat-label>Username</mat-label>
       <input name="username" matInput formControlName="username" />
+      <mat-hint  *ngIf="signupForm.controls.username.touched && signupForm.controls.username.invalid">Username obbligatorio</mat-hint>
+
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field >
       <mat-label>Email</mat-label>
       <input name="email" type="email" matInput formControlName="email" />
+      <mat-hint  *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid">Inserire una mail valida</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
@@ -17,7 +20,9 @@
         matInput
         formControlName="password"
       />
+    <mat-hint *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid">Password obbligatorio, min 4 caratteri</mat-hint>
     </mat-form-field>
-    <button mat-flat-button>Registrati</button>
+
+    <button mat-flat-button [disabled]="!signupForm.valid" > Registrati </button>
   </form>
 </div>

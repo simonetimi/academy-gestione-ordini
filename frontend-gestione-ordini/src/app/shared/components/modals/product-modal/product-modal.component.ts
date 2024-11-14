@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Product } from '../../../../core/models/Product';
-import { FormControl, FormGroup } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-product-modal',
@@ -17,9 +17,16 @@ export class ProductModalComponent {
   // se product esiste, isEditMode è true. se product non esiste, questo valore è false
   isEditMode = !!this.productData;
 
+  priceValidator(val:AbstractControl) : ValidationErrors | null {
+    if(val.value === 0){
+      return {notAllowed:true}
+    }
+    return null;
+  }
+
   productForm = new FormGroup({
-    name: new FormControl<string>(this.productData?.name || ''),
-    price: new FormControl<number>(this.productData?.price || 0),
+    name: new FormControl<string>(this.productData?.name || '',[Validators.required, Validators.min(2)]),
+    price: new FormControl<number>(this.productData?.price || 0,[Validators.required, this.priceValidator]),
     vat: new FormControl<number>(this.productData?.vat || 22),
   });
 
