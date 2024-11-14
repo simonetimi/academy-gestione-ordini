@@ -26,14 +26,14 @@ export class AdminComponent implements OnInit {
   #productsService = inject(ProductsService);
 
   dataSource = new MatTableDataSource();
-  hiddenTable = true;
+  noData = true;
 
   ngOnInit() {
     this.#productsService.products.subscribe({
       next: (value) => {
         this.dataSource.data = value;
         if (this.dataSource.data.length > 0) {
-          this.hiddenTable = false;
+          this.noData = false;
         }
       },
     });

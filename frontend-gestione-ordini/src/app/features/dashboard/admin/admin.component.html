@@ -3,7 +3,7 @@
   Aggiungi prodotto
 </button>
 
-<div class="table-wrapper mat-elevation-z2" [hidden]="hiddenTable">
+<div class="table-wrapper mat-elevation-z2" [hidden]="noData">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -74,15 +74,17 @@
   </table>
 </div>
 <div>
-  <mat-paginator
-    class="mat-elevation-z2"
-    [pageSizeOptions]="[5, 10]"
-    showFirstLastButtons
-    aria-label="Seleziona pagina prodotti"
-  >
-  </mat-paginator>
+  <div [hidden]="noData">
+    <mat-paginator
+      class="mat-elevation-z2"
+      [pageSizeOptions]="[5, 10]"
+      showFirstLastButtons
+      aria-label="Seleziona pagina prodotti"
+    >
+    </mat-paginator>
+  </div>
 </div>
 
-@if (hiddenTable) {
+@if (noData) {
   <h3>Nessun prodotto presente.</h3>
 }
