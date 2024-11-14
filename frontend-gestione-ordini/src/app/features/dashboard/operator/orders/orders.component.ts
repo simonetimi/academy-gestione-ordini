@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../../../../core/services/modal.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,18 +11,12 @@ import { ViewOrderProductsComponent } from '../../../../shared/components/modals
 import { OrderModalComponent } from '../../../../shared/components/modals/order-modal/order-modal.component';
 import { OrdersService } from '../../../../core/services/orders.service';
 
-// TODO: MOSTRA PRODOTTI IVA IN: PRODOTTI (ADMIN), VIEW PRODOTTI MODAL, ORDINI
-
-// TODO fix modifica utente non si riflette negli ordini:
-//  fai refresh forzato == non della pagina, fai nuova richiesta http che aggiorni gli ordini.
-//  fallo nel service, nella funzione che aggiorna gli utenti
-
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
 })
-export class OrdersComponent {
+export class OrdersComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
   displayedColumns: string[] = [
     'id',

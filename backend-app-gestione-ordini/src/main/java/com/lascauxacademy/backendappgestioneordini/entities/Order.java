@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -32,18 +34,18 @@ public class Order {
 
     @Column(name = "total_price_with_vat", nullable = false)
     private double totalPriceWithVat;
-    
+
     @Column(name = "total_price_no_vat", nullable = false)
     private double totalPriceNoVat;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    
+
     @Column
-    private LocalDateTime date;
-    
+    private OffsetDateTime date;
+
     public String getDate() {
-    	return date.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        return date.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 }
