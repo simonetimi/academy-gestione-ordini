@@ -39,6 +39,20 @@
       >
     </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Ruolo</mat-label>
+      <mat-select formControlName="role" required>
+        <!--        <mat-option>&#45;&#45;</mat-option>-->
+        @for (role of arrayRoles; track role) {
+          <mat-option [value]="role">{{role}}</mat-option>
+        }
+      </mat-select>
+      @if (signupForm.hasError('required')) {
+        <mat-error>
+          Scegli Iva
+        </mat-error>
+      }
+    </mat-form-field>
     <button mat-flat-button [disabled]="!signupForm.valid">Registrati</button>
   </form>
 </div>

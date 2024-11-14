@@ -45,7 +45,7 @@ export class HttpService {
     );
   }
 
-  signup(username: string, email: string, password: string) {
+  signup(username: string, email: string, password: string, role: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -56,6 +56,9 @@ export class HttpService {
         username,
         email,
         password,
+        roles:[
+          role
+        ]
       },
       {
         headers: headers,

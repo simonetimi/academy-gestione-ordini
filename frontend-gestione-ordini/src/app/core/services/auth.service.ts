@@ -81,8 +81,8 @@ export class AuthService {
     });
   }
 
-  signup(username: string, email: string, password: string) {
-    this.#httpService.signup(username, email, password).subscribe({
+  signup(username: string, email: string, password: string, role: string) {
+    this.#httpService.signup(username, email, password, role).subscribe({
       next: (_value: HttpResponse<any>) => {
         this.#notificationService.sendSuccessNotification(
           `Registrazione avvenuta con successo!`,

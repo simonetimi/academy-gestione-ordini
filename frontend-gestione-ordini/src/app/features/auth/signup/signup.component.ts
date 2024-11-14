@@ -9,11 +9,13 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class SignupComponent {
   #authService: AuthService = inject(AuthService);
+  arrayRoles : String[] = ['Admin', 'Operator'];
 
   signupForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.email, Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required,Validators.minLength(4)]),
+    role: new FormControl('', [Validators.required]),
   });
 
   signup() {
@@ -21,6 +23,7 @@ export class SignupComponent {
       this.signupForm.controls.username.value!,
       this.signupForm.controls.email.value!,
       this.signupForm.controls.password.value!,
+      this.signupForm.controls.role.value!,
     );
     this.#authService.userLogin.next({
       username: this.signupForm.controls.username.value!,
