@@ -28,6 +28,16 @@
       </td>
     </ng-container>
 
+    <!-- TotalPrice without vat Column -->
+    <ng-container matColumnDef="totalPriceNoVat">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Prezzo totale senza IVA
+      </th>
+      <td mat-cell *matCellDef="let order">
+        {{ order.totalPriceNoVat | currency: "EUR" }}
+      </td>
+    </ng-container>
+
     <!-- TotalPrice with vat Column -->
     <ng-container matColumnDef="totalPriceWithVat">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>

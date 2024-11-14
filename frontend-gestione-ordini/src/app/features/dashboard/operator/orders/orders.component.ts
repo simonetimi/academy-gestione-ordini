@@ -22,6 +22,7 @@ export class OrdersComponent implements OnInit {
     'id',
     'date',
     'state',
+    'totalPriceNoVat',
     'totalPriceWithVat',
     'products',
     'client',
