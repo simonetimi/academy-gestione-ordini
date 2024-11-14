@@ -18,13 +18,13 @@ public class ProductService {
 		this.productRepository = productRepository;
 	}
 
-	@Transactional(readOnly = true)
-	public List<Product> getAllProducts() {
-		return productRepository.findAll();
-	}
+//	@Transactional(readOnly = true)
+//	public List<Product> getAllProducts() {
+//		return productRepository.findAll();
+//	}
 
 	@Transactional(readOnly = true)
-	public List<Product> getAllCurrentProducts() {
+	public List<Product> getAllProducts() {
 		return productRepository.findByIsCurrent(true);
 	}
 

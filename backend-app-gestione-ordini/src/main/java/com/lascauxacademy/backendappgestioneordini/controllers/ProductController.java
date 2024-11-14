@@ -25,12 +25,7 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
     
-    @GetMapping("/current")
-    public ResponseEntity<List<Product>> getAllCurrentProducts() {
-        List<Product> products = productService.getAllCurrentProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
-
+    
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Product> addProduct(@RequestBody Product p) {
