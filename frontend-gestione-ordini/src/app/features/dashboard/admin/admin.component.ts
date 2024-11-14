@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ProductsService } from '../../../core/services/products.service';
+import { ConfirmDeleteComponent } from '../../../shared/components/modals/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-admin',
@@ -70,6 +71,12 @@ export class AdminComponent implements OnInit {
   }
 
   onClickDelete(product: Product) {
-    this.#productsService.removeProduct(product);
+    this.#modalService.openModal(ConfirmDeleteComponent).subscribe({
+      next: (result: boolean | null) => {
+        if (result) {
+          this.#productsService.removeProduct(product);
+        }
+      },
+    });
   }
 }

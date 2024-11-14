@@ -14,6 +14,7 @@ import {
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { VatPipe } from './pipes/vat.pipe';
+import { ConfirmDeleteComponent } from './components/modals/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { VatPipe } from './pipes/vat.pipe';
     OrderModalComponent,
     ViewClientModalComponent,
     ViewOrderProductsComponent,
+    ConfirmDeleteComponent,
   ],
   imports: [
     CommonModule,
