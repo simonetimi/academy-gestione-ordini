@@ -64,7 +64,7 @@
       </div>
     }
 
-    <button mat-flat-button>
+    <button mat-flat-button [disabled]="!orderForm.valid || productsList.length == 0" >
       {{ isEditMode ? "Modifica" : "Aggiungi" }} ordine
     </button>
   </form>

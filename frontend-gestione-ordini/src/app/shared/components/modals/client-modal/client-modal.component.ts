@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Client } from '../../../../core/models/Client';
 
 @Component({
@@ -18,11 +18,11 @@ export class ClientModalComponent {
   isEditMode = !!this.clientData;
 
   clientForm = new FormGroup({
-    companyName: new FormControl<string>(this.clientData?.companyName || ''),
-    streetName: new FormControl<string>(this.clientData?.streetName || ''),
-    city: new FormControl<string>(this.clientData?.city || ''),
-    province: new FormControl<string>(this.clientData?.province || ''),
-    nation: new FormControl<string>(this.clientData?.nation || ''),
+    companyName: new FormControl<string>(this.clientData?.companyName || '',Validators.required),
+    streetName: new FormControl<string>(this.clientData?.streetName || '',Validators.required),
+    city: new FormControl<string>(this.clientData?.city || '',Validators.required),
+    province: new FormControl<string>(this.clientData?.province || '',Validators.required),
+    nation: new FormControl<string>(this.clientData?.nation || '',Validators.required),
   });
 
   onClientSubmit() {

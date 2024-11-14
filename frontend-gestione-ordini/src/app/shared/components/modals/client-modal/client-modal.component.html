@@ -8,24 +8,58 @@
       <mat-label>Ragione sociale</mat-label>
       <input formControlName="companyName" matInput />
     </mat-form-field>
+    <mat-hint
+      *ngIf="
+          clientForm.controls.companyName.touched &&
+          clientForm.controls.companyName.invalid
+        "
+    >Ragione sociale obbligatoria</mat-hint
+    >
     <mat-form-field>
       <mat-label>Indirizzo</mat-label>
       <input formControlName="streetName" matInput />
     </mat-form-field>
+    <mat-hint
+      *ngIf="
+          clientForm.controls.streetName.touched &&
+          clientForm.controls.streetName.invalid
+        "
+    >Indirizzo obbligatorio</mat-hint
+    >
     <mat-form-field>
       <mat-label>Città</mat-label>
       <input formControlName="city" matInput />
     </mat-form-field>
+    <mat-hint
+      *ngIf="
+          clientForm.controls.city.touched &&
+          clientForm.controls.city.invalid
+        "
+    >Citta obbligatorio</mat-hint
+    >
     <mat-form-field>
       <mat-label>Provincia</mat-label>
       <input formControlName="province" matInput />
     </mat-form-field>
+    <mat-hint
+      *ngIf="
+          clientForm.controls.province.touched &&
+          clientForm.controls.province.invalid
+        "
+    >Provincia obbligatorio</mat-hint
+    >
     <mat-form-field>
       <mat-label>Nazione</mat-label>
       <input formControlName="nation" matInput />
     </mat-form-field>
-
-    <button mat-flat-button>
+    <mat-hint
+      *ngIf="
+          clientForm.controls.nation.touched &&
+          clientForm.controls.nation.invalid
+        "
+    >Nazione obbligatorio</mat-hint
+    >
+    <button mat-flat-button [disabled]="!clientForm.valid" >
       {{ isEditMode ? "Modifica" : "Aggiungi" }} cliente
     </button>
   </form>
