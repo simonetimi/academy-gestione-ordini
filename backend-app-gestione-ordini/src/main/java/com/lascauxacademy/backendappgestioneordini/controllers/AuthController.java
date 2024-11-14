@@ -60,8 +60,14 @@ public class AuthController {
 	// Build Register REST API
 	@PostMapping(value = { "/register", "/signup" })
 	public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-		String response = authService.register(registerDto);
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+		String response;
+		try {
+			response = authService.register(registerDto);
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
+		}
+
 	}
 
 }

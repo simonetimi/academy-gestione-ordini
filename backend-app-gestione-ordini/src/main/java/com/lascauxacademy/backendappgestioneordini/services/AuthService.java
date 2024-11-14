@@ -20,6 +20,8 @@ import com.lascauxacademy.backendappgestioneordini.repositories.RoleRepository;
 import com.lascauxacademy.backendappgestioneordini.repositories.UserRepository;
 import com.lascauxacademy.backendappgestioneordini.security.JwtTokenProvider;
 
+import jakarta.persistence.EntityExistsException;
+
 @Service
 public class AuthService {
 	private AuthenticationManager authenticationManager;
@@ -53,8 +55,16 @@ public class AuthService {
 		return token;
 	}
 
-	public String register(RegisterDto registerDto) {
-
+	public String register(RegisterDto registerDto) throws Exception {
+		
+		if( userRepository.existsByUsername(registerDto.getUsername())) {
+			throw new EntityExistsException("username_exists");
+		}
+		
+		if( userRepository.existsByEmail(registerDto.getEmail())) {
+			throw new EntityExistsException("email_exists");
+		}
+		
 		User user = new User();
 		user.setUsername(registerDto.getUsername());
 		user.setEmail(registerDto.getEmail());
@@ -77,7 +87,6 @@ public class AuthService {
 		}
 
 		user.setRoles(roles);
-		System.out.println(user);
 		userRepository.save(user);
 
 		return "User registered successfully!.";
