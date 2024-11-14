@@ -18,6 +18,9 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+	// this filter checks the JWT token in every HTTP request to ensure the user is authenticated
+	// it extends OncePerRequestFilter, so it only runs once per request
+	
     private JwtTokenProvider jwtTokenProvider;
 
     private UserDetailsService userDetailsService;
@@ -43,31 +46,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // load the user associated with token
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+            
+            // create an authentication object with the user's details and roles
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails,
                 null,
                 userDetails.getAuthorities()
             );
-
+            
+            // set additional authentication details using the current request
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+         // set the authentication object in the security context
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         }
 
+        // pass the request to the next filter in the filter chain
         filterChain.doFilter(request, response);
     }
 
+    // helper method to extract the JWT token from the "Authorization" header of the HTTP request
     private String getTokenFromRequest(HttpServletRequest request){
 
+    	// get the Authorization header from the request
         String bearerToken = request.getHeader("Authorization");
 
+        // check if the header contains text and starts with "Bearer "
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
+        	// return the token by removing "Bearer " prefix
             return bearerToken.substring(7, bearerToken.length());
         }
 
+     // if there's no token, return null
         return null;
     }
+    
+//    la classe JwtAuthenticationFilter controlla ogni richiesta HTTP per verificare 
+   // se contiene un token JWT valido. Se il token è valido, carica i dettagli 
+   // dell'utente e imposta l'utente autenticato nel contesto di sicurezza.
 
 }

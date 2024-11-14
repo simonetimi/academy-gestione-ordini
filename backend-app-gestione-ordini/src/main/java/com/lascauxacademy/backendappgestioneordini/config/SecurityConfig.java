@@ -34,47 +34,44 @@ public class SecurityConfig {
         this.authenticationFilter = authenticationFilter;
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    // bean that returns a password encoder used to securely store passwords
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-//
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.csrf(csrf -> csrf.disable())
-//				.authorizeHttpRequests(requests -> requests.requestMatchers("/auth/**").permitAll()
-//						.requestMatchers("/role", "/role/**").permitAll().requestMatchers("/client", "/client/**")
-//						.permitAll().requestMatchers("/orders", "/orders/**").permitAll()
-//						.requestMatchers("/products", "/products/**").permitAll().anyRequest().authenticated());
-//		return http.build();
-//	}
+    // bean that provides the AuthenticationManager for the app
+	// AuthenticationManager is needed for handling authentication in Spring Security
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
+	
+	 @Bean
+	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    	http.csrf(csrf -> csrf.disable()) //Cross-Site Request Forgery is disbled beacuse using JWT
+	        .authorizeHttpRequests((authorize) -> authorize
+	        		.requestMatchers("/auth/**").permitAll()
+	                .requestMatchers("/role", "/role/**").permitAll()
+	                .requestMatchers("/client", "/client/**").permitAll()
+	                .requestMatchers("/orders", "/orders/**").permitAll()
+	                .requestMatchers("/products", "/products/**").permitAll()
+	                .anyRequest().authenticated())
+	        // handle exceptions during authentication and provide an entry point for unauthorized access
+	        .exceptionHandling( exception -> exception
+	                .authenticationEntryPoint(authenticationEntryPoint)// set entry point for authentication failures
+	                // configure session management, using stateless sessions as we're using JWT 
+	        		).sessionManagement( session -> session
+	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)// stateless means no session is stored
+	        );
 
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/role", "/role/**").permitAll()
-                        .requestMatchers("/clients", "/clients/**").permitAll()
-                        .requestMatchers("/orders", "/orders/**").permitAll()
-                        .requestMatchers("/products", "/products/**").permitAll()
-                        .anyRequest().authenticated())
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                ).sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-
-        http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-//	        http.cors(Customizer.withDefaults());
-        return http.build();
-    }
+	        // add custom JWT filter before the default username/password filter in the security chain , 
+	    	//check token before authentication
+	    	http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	    	
+	    	// build and return the configured security filter chain
+	    	return http.build();
+	    }
 
 }

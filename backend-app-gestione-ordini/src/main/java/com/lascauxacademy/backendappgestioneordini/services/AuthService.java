@@ -39,11 +39,15 @@ public class AuthService {
 
 	public String login(LoginDto loginDto) {
 
+        // create an authentication token using the provided username and password
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
 		System.out.println(authentication);
+		
+        // set the authentication in the security context
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        // generate a JWT token for the authenticated user
 		String token = jwtTokenProvider.generateToken(authentication);
 		System.out.println(token);
 		return token;
@@ -54,16 +58,20 @@ public class AuthService {
 		User user = new User();
 		user.setUsername(registerDto.getUsername());
 		user.setEmail(registerDto.getEmail());
+		
+        // encode the user's password before saving
 		user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
 		Set<Role> roles = new HashSet<>();
 
+        // if roles are provided in the registration data, find and add them to the user's roles
 		if (registerDto.getRoles() != null) {
 			registerDto.getRoles().forEach(role -> {
 				Role userRole = roleRepository.findByRoleName(getRole(role)).get();
 				roles.add(userRole);
 			});
 		} else {
+            // if no roles are provided, assign the default role "ROLE_OPERATOR"
 			Role userRole = roleRepository.findByRoleName(ERole.ROLE_OPERATOR).get();
 			roles.add(userRole);
 		}
@@ -75,6 +83,7 @@ public class AuthService {
 		return "User registered successfully!.";
 	}
 
+    // helper method to convert a role string to the corresponding enum type
 	public ERole getRole(String role) {
 		if (role.equals("ADMIN"))
 			return ERole.ROLE_ADMIN;
@@ -82,6 +91,7 @@ public class AuthService {
 			return ERole.ROLE_OPERATOR;
 	}
 
+    // method to retrieve the role of a user based on their username
 	public String userRole(String username) throws Exception {
 		User user = userRepository.findByUsername(username).orElseThrow(() -> new Exception("User not found"));
 
@@ -90,6 +100,7 @@ public class AuthService {
 			throw new Exception("No roles found for the user");
 		}
 
+        // return the name of the first role in the user's role set as a string
 		Role role = roles.iterator().next();
 		return role.getRoleName().name();
 	}
