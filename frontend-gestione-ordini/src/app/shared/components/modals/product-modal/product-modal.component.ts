@@ -11,6 +11,7 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} f
 export class ProductModalComponent {
   #dialogRef = inject(MatDialogRef);
   productData: Product | null = inject(MAT_DIALOG_DATA);
+  varArray : number[] = [0, 4, 5 ,10 ,22];
 
   constructor() {}
 
