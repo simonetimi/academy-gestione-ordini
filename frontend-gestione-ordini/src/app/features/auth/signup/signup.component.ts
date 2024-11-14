@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class SignupComponent {
   #authService: AuthService = inject(AuthService);
-  arrayRoles : String[] = ['Admin', 'Operator'];
+  arrayRoles : String[] = ['Admin', 'Operatore'];
 
   signupForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
