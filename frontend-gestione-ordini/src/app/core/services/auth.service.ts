@@ -90,9 +90,13 @@ export class AuthService {
         this.#router.navigate(['auth', 'login']);
       },
       error: (err) => {
-        console.log(err);
-        let message = 'Errore registrazione: ${err.message}';
+        let message = `Errore registrazione: ${err.message}`;
         if (err.status === 409) {
+          if (err.error === 'username_exists') {
+            message = 'Il nome utente è già in uso!';
+          } else if (err.error === 'email_exists') {
+            message = 'La email è già in uso!';
+          }
         }
         this.#notificationService.sendErrorNotification(message);
       },
