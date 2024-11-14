@@ -5,7 +5,8 @@ export interface Order {
   id: string;
   date: Date;
   state: 'IN_PROGRESS' | 'COMPLETED';
-  totalPrice: number;
+  totalPriceNoVat: number;
+  totalPriceWithVat: number;
   orderProducts: OrderProduct[];
   client: Client;
 }
@@ -14,7 +15,8 @@ export interface OrderDTO {
   id: string;
   date: Date;
   state: 'IN_PROGRESS' | 'COMPLETED';
-  totalPrice: number;
+  totalPriceNoVat: number;
+  totalPriceWithVat: number;
   orderProductList: OrderProductListItem[];
   clientId: string;
 }

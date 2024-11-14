@@ -14,7 +14,9 @@ export class OrdersService {
 
   constructor() {
     this.#httpService.getAllOrders().subscribe({
-      next: (value) => this.#orders$.next(value),
+      next: (value) => {
+        this.#orders$.next(value);
+      },
     });
   }
 
@@ -28,7 +30,8 @@ export class OrdersService {
       id: order.id,
       date: order.date,
       state: order.state,
-      totalPrice: order.totalPrice,
+      totalPriceNoVat: order.totalPriceNoVat,
+      totalPriceWithVat: order.totalPriceWithVat,
       clientId: order.client.id,
       orderProductList: order.orderProducts.map((orderProduct) => {
         return {

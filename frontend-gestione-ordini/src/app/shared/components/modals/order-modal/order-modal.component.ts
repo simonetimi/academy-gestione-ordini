@@ -82,16 +82,25 @@ export class OrderModalComponent implements OnInit {
   onOrderSubmit() {
     const products: OrderProduct[] = this.productsList.value;
 
-    const totalPrice = products.reduce(
+    const totalPriceNoVat = products.reduce(
       (acc, orderProduct) =>
         orderProduct.quantity * orderProduct.product.price + acc,
       0,
     );
+
+    const totalPriceWithVat = products.reduce((acc, orderProduct) => {
+      const percentageVat = orderProduct.product.vat / 100;
+      const orderProductPriceWithVat =
+        percentageVat * orderProduct.product.price;
+      return orderProduct.quantity * orderProductPriceWithVat + acc;
+    }, 0);
+
     const order: Order = {
       id: this.orderData?.id as string,
       date: this.orderForm.controls.date.value as Date,
       state: this.orderForm.controls.state.value as 'IN_PROGRESS' | 'COMPLETED',
-      totalPrice,
+      totalPriceNoVat,
+      totalPriceWithVat,
       orderProducts: products,
       client: this.orderForm.controls.client.value as Client,
     };
