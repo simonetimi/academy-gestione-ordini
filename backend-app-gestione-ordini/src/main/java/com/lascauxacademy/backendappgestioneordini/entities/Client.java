@@ -35,6 +35,9 @@ public class Client {
 
     @Column(name = "street_name",nullable = false)
     private String streetName;
+    
+    @Column(nullable = false)
+    private String cap;
 
     @Column(nullable = false)
     private String city;

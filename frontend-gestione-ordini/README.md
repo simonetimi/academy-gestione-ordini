@@ -46,7 +46,30 @@ così gli ordini già effettuati con quel prodotto vengono mantenuti.
 
 ### Autenticazione
 
-L'autenticazione avviene tramite token JWT. Il token ha una durata di 10 ore.
-Gli endpoint dell'API sono protetti dietro autenticazione, mentre le operazioni CRUD (tranne READ) richiedono anche un ruolo specifico
+1) L'autenticazione avviene tramite token JWT. Il token ha come soggetto il username dell'user e viene segnata con una secretkey la quale verrà usata in seguito alla decodifica.
+La chiave segreta è una stringa lunga almeno 32 caratteri salvata nell'application.properties.
+Allo stesso modo anche la data di scadenza viene salvata nell'application.properties e passato al metodo della creazione del token.
+Nella classe JwtTokenProvider oltre alla creazione del token troviamo anche il metodo "extractUsername" che decodifica il token passato con la secretkey e ritorna il username codificato nel token.
+Inoltre troviamo anche il metodo "validateToken" metodo usato per la validazione tel token nella classe filter JwtAuthenticationFilter la quale in seguito viene iniettata nel SecurityConfig di Spring, nel @Bean SecurityFilterChain.
+
+
+2) La classe CustomUserDetailsService implementa UserDetailsService che serve per caricare le informazioni di autenticazione di un utente per Spring Security facendo @Override del metodo il quale viene chiamato per cercare l'utente tramite username o email, convertire i ruoli in un formato compatibile e restituire un oggetto User con email, password e ruoli, pronto per l'autenticazione
+
+
+3) La classe JwtAuthenticationEntryPoint gestisce i tentativi di accesso non autorizzati,
+   	inviando una risposta di errore 401 Unauthorized.
+
+
+4)    La classe JwtAuthenticationFilter controlla ogni richiesta HTTP per verificare
+ se contiene un token JWT valido.
+In questa classe vengono iniettati le precendenti classi JwtTokenProvider e UserDetailsService per la decodifica e la validazione del token ed il recupero dell'utente usando il metodo "loadUserByUsername".  Se il token è valido, carica i dettagli
+      dell'utente e imposta l'utente autenticato nel contesto di sicurezza.
+
+
+5) Nella classe SecurityConfig vengono iniettati le precedenti clasii 
+Nella classe JwtAuthenticationFilter 
+Gli endpoint dell'API sono protetti dietro autenticazione, mentre le operazioni CRUD (tranne READ) richiedono anche un ruolo specifico(Admin - Operator)
+
+
 
 ### 
