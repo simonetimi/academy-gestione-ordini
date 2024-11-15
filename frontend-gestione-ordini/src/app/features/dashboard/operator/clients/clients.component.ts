@@ -18,7 +18,8 @@ export class ClientsComponent {
     'companyName',
     'streetName',
     'city',
-    'provinceAndNation',
+    'province',
+    'nation',
     'edit',
   ];
   #clientsService: ClientsService = inject(ClientsService);
