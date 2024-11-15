@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
   displayedColumns: string[] = [
     'name',
-    'priceNoVat',
+    'price',
     'vat',
     'priceVat',
     'edit',
@@ -25,7 +25,7 @@ export class AdminComponent implements OnInit {
   ];
   #productsService = inject(ProductsService);
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<Product>();
   noData = true;
 
   ngOnInit() {
@@ -48,6 +48,16 @@ export class AdminComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (item: Product, property: string) => {
+      if (!item) return '';
+      switch (property) {
+        case 'priceVat':
+          return item.price || '';
+        default:
+          const value = item[property as keyof Product];
+          return typeof value === 'number' ? value : '';
+      }
+    };
   }
 
   onClickAdd() {

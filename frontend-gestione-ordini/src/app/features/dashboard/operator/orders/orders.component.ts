@@ -31,7 +31,7 @@ export class OrdersComponent implements OnInit {
 
   #ordersService: OrdersService = inject(OrdersService);
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<Order>();
   noData = true;
 
   ngOnInit() {
@@ -56,6 +56,20 @@ export class OrdersComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (item: Order, property: string) => {
+      if (!item) return '';
+      switch (property) {
+        case 'client':
+          return item.client.companyName.toLowerCase() || '';
+        case 'date':
+          return new Date(item.date).getTime();
+        default:
+          const value = item[property as keyof Order];
+          return typeof value === 'number' || typeof value === 'string'
+            ? value
+            : '';
+      }
+    };
   }
 
   onClickAdd() {
