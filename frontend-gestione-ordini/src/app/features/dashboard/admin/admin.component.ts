@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
   #modalService: ModalService = inject(ModalService);
   displayedColumns: string[] = [
     'name',
-    'price',
+    'priceNoVat',
     'vat',
     'priceVat',
     'edit',
@@ -31,7 +31,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.#productsService.products.subscribe({
       next: (value) => {
-        console.log(value);
         this.dataSource.data = value;
         if (this.dataSource.data.length > 0) {
           this.noData = false;
