@@ -17,6 +17,7 @@ export class ClientsComponent {
   displayedColumns: string[] = [
     'companyName',
     'streetName',
+    'cap',
     'city',
     'province',
     'nation',

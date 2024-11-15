@@ -27,6 +27,14 @@
       >Indirizzo obbligatorio</mat-hint
     >
     <mat-form-field>
+      <mat-label>CAP</mat-label>
+      <input formControlName="cap" matInput />
+    </mat-form-field>
+    <mat-hint
+      *ngIf="clientForm.controls.cap.touched && clientForm.controls.cap.invalid"
+      >CAP obbligatorio di 5 cifre</mat-hint
+    >
+    <mat-form-field>
       <mat-label>Città</mat-label>
       <input formControlName="city" matInput />
     </mat-form-field>

@@ -3,6 +3,7 @@ export interface Client {
   companyName: string;
   streetName: string;
   city: string;
+  cap: string;
   province: string;
   nation: string;
 }

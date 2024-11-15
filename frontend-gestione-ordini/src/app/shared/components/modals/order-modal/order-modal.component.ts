@@ -1,7 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Client } from '../../../../core/models/Client';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Order } from '../../../../core/models/Order';
 import { Product } from '../../../../core/models/Product';
 import { OrderProduct } from '../../../../core/models/OrderProduct';
@@ -20,6 +27,13 @@ export class OrderModalComponent implements OnInit {
   #productsService: ProductsService = inject(ProductsService);
   clients: Client[] = [];
   products: Product[] = [];
+
+  quantityValidator(val: AbstractControl): ValidationErrors | null {
+    if (val.value <= 0) {
+      return { notAllowed: true };
+    }
+    return null;
+  }
 
   // se product esiste, isEditMode è true. se product non esiste, questo valore è false
   isEditMode = !!this.orderData;
@@ -46,6 +60,7 @@ export class OrderModalComponent implements OnInit {
           ),
           quantity: new FormControl<number>(orderProduct.quantity, [
             Validators.required,
+            this.quantityValidator,
           ]),
         });
         this.productsList.push(productFormGroup);
@@ -70,7 +85,10 @@ export class OrderModalComponent implements OnInit {
     // product + quantity
     const productFormGroup = new FormGroup({
       product: new FormControl<Product | null>(null, Validators.required),
-      quantity: new FormControl<number>(1, [Validators.required]),
+      quantity: new FormControl<number>(1, [
+        Validators.required,
+        this.quantityValidator,
+      ]),
     });
     this.productsList.push(productFormGroup);
   }

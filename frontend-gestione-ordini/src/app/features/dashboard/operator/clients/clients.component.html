@@ -19,13 +19,21 @@
       </td>
     </ng-container>
 
+    <!-- Cap Column -->
+    <ng-container matColumnDef="cap">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CAP</th>
+      <td mat-cell *matCellDef="let client">
+        {{ client.cap }}
+      </td>
+    </ng-container>
+
     <!-- City Column -->
     <ng-container matColumnDef="city">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Città</th>
       <td mat-cell *matCellDef="let client">{{ client.city }}</td>
     </ng-container>
 
-    <!-- Province and Nation Column -->
+    <!-- Province Column -->
     <ng-container matColumnDef="province">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Provincia</th>
       <td mat-cell *matCellDef="let client">
@@ -33,7 +41,7 @@
       </td>
     </ng-container>
 
-    <!-- Province and Nation Column -->
+    <!-- Nation Column -->
     <ng-container matColumnDef="nation">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazione</th>
       <td mat-cell *matCellDef="let client">
