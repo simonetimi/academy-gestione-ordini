@@ -39,6 +39,9 @@ export class AuthService {
       } else {
         this.#router.navigate(['dashboard/', 'operator']);
       }
+    } else {
+      this.#persistenceService.removeUser();
+      return;
     }
 
     // emit user (behavior subject)

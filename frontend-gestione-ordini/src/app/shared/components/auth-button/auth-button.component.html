@@ -1,10 +1,10 @@
-@if (url === "/auth/login") {
-  <a mat-flat-button [routerLink]="['/auth', 'signup']">Registrati</a>
-} @else if (url === "/auth/signup") {
-  <a mat-flat-button [routerLink]="['/auth', 'login']">Login</a>
-}
-
 @if (user$ | async; as user) {
   <h3>Benvenuto, {{ user.username }}</h3>
   <button mat-flat-button (click)="onLogout()">Logout</button>
+} @else {
+  @if (url === "/auth/login") {
+    <a mat-flat-button [routerLink]="['/auth', 'signup']">Registrati</a>
+  } @else if (url === "/auth/signup") {
+    <a mat-flat-button [routerLink]="['/auth', 'login']">Login</a>
+  }
 }
