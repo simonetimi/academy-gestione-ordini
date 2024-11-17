@@ -20,14 +20,14 @@ export class HttpService {
     if (stringifiedUser) {
       this.#token = JSON.parse(stringifiedUser).token;
     }
+
+  }
+  setToken(token: string) {
+    this.#token = token;
     this.headersWithToken = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${this.#token}`,
     });
-  }
-
-  setToken(token: string) {
-    this.#token = token;
   }
 
   // auth
@@ -37,7 +37,7 @@ export class HttpService {
       'Content-Type': 'application/json',
     });
     return this.#httpClient.post(
-      `${this.baseUrl}/auth/signin`,
+      `${this.baseUrl}/auth/login`,
       {
         username,
         password,
