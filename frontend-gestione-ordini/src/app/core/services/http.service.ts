@@ -20,8 +20,12 @@ export class HttpService {
     if (stringifiedUser) {
       this.#token = JSON.parse(stringifiedUser).token;
     }
-
+    this.headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
   }
+
   setToken(token: string) {
     this.#token = token;
     this.headersWithToken = new HttpHeaders({
