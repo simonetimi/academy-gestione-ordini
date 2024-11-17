@@ -53,11 +53,9 @@ public class SecurityConfig {
 	    	http.csrf(csrf -> csrf.disable()) //Cross-Site Request Forgery is disbled beacuse using JWT
 	        .authorizeHttpRequests((authorize) -> authorize
 	        		.requestMatchers("/auth/**").permitAll()
-	                .requestMatchers("/role", "/role/**").permitAll()
 	                .requestMatchers("/clients", "/clients/**").permitAll()
 	                .requestMatchers("/orders", "/orders/**").permitAll()
-	                .requestMatchers("/products", "/products/**").permitAll()
-	                .anyRequest().authenticated())
+	                .requestMatchers("/products", "/products/**").permitAll())
 	        // handle exceptions during authentication and provide an entry point for unauthorized access
 	        .exceptionHandling( exception -> exception
 	                .authenticationEntryPoint(authenticationEntryPoint)// set entry point for authentication failures

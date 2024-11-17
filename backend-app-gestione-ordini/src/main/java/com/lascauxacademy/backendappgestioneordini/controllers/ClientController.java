@@ -21,6 +21,7 @@ public class ClientController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<List<Client>> getAllClients() {
         List<Client> clients = clientService.getAllClients();
         return new ResponseEntity<>(clients, HttpStatus.OK);

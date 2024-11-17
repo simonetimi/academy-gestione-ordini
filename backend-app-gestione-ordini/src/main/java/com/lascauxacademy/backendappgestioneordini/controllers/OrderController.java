@@ -23,6 +23,7 @@ public class OrderController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_OPERATOR')")
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = this.orderService.getAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
