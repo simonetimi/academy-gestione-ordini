@@ -17,3 +17,12 @@
   transform: scale(0.9);
   min-height: 40px;
 }
+
+.th-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.text-right {
+  text-align: right;
+}

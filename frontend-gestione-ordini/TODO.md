@@ -7,7 +7,7 @@
 
 - [x] Logout: bottone, logica auth
 
-- [ ] Service state per: prodotti, ordini, clienti
+- [x] Service state per: prodotti, ordini, clienti
 - [x] Service chiamate http
 - [x] Persistance della sessione (JWT/role)
 

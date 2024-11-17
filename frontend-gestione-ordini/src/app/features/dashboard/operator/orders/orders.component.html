@@ -30,20 +30,24 @@
 
     <!-- TotalPrice without vat Column -->
     <ng-container matColumnDef="totalPriceNoVat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Prezzo totale senza IVA
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="th-header-right">
+          <span mat-sort-header>Prezzo totale senza IVA</span>
+        </div>
       </th>
-      <td mat-cell *matCellDef="let order">
+      <td mat-cell *matCellDef="let order" class="text-right">
         {{ order.totalPriceNoVat | currency: "EUR" }}
       </td>
     </ng-container>
 
     <!-- TotalPrice with vat Column -->
     <ng-container matColumnDef="totalPriceWithVat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Prezzo totale con IVA
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="th-header-right">
+          <span mat-sort-header>Prezzo totale con IVA</span>
+        </div>
       </th>
-      <td mat-cell *matCellDef="let order">
+      <td mat-cell *matCellDef="let order" class="text-right">
         {{ order.totalPriceWithVat | currency: "EUR" }}
       </td>
     </ng-container>

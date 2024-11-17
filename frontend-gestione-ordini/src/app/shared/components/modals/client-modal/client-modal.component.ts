@@ -18,10 +18,10 @@ export class ClientModalComponent {
   #dialogRef = inject(MatDialogRef);
   clientData: Client | null = inject(MAT_DIALOG_DATA);
 
-  capValidator(val: AbstractControl): ValidationErrors | null {
-    if (val.value.length !== 5) {
+  capValidator(abstractControl: AbstractControl): ValidationErrors | null {
+    if (abstractControl.value.length !== 5) {
       return { notAllowed: true };
-    } else if (Number.isNaN(val.value)) {
+    } else if (Number.isNaN(abstractControl.value)) {
       return { notAllowed: true };
     }
     return null;

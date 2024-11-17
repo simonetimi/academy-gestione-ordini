@@ -24,3 +24,12 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+.th-header-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.text-right {
+  text-align: right;
+}

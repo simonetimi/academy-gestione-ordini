@@ -13,10 +13,12 @@
 
     <!-- Price no vat Column -->
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Prezzo IVA esclusa
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="th-header-right">
+          <span mat-sort-header>Prezzo IVA esclusa</span>
+        </div>
       </th>
-      <td mat-cell *matCellDef="let product">
+      <td mat-cell *matCellDef="let product" class="text-right">
         {{ product.price | currency: "EUR" }}
       </td>
     </ng-container>
@@ -29,10 +31,12 @@
 
     <!-- Price with vat Column -->
     <ng-container matColumnDef="priceVat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Prezzo IVA inclusa
+      <th mat-header-cell *matHeaderCellDef>
+        <div class="th-header-right">
+          <span mat-sort-header>Prezzo IVA inclusa</span>
+        </div>
       </th>
-      <td mat-cell *matCellDef="let product">
+      <td mat-cell *matCellDef="let product" class="text-right">
         {{ [product.price, product.vat] | vat | currency: "EUR" }}
       </td>
     </ng-container>
