@@ -3,6 +3,7 @@ package com.lascauxacademy.backendappgestioneordini.services;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,6 +32,9 @@ public class AuthService {
 	private RoleRepository roleRepository;
 	PasswordEncoder passwordEncoder;
 	private JwtTokenProvider jwtTokenProvider;
+	
+	@Value("${app.jwt-expiration-milliseconds}")
+	private long jwtExpirationDate;
 
 	public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository,
 			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
@@ -67,7 +71,7 @@ public class AuthService {
 		jwtAuthResponse.setEmail(user.getEmail());
 		jwtAuthResponse.setId(user.getId());
 		jwtAuthResponse.setRole(role);
-		jwtAuthResponse.setTokenExpireDate(System.currentTimeMillis() + 1000 * 60 * 60 * 10); // 10 hours in millis
+		jwtAuthResponse.setTokenExpireDate(System.currentTimeMillis() + jwtExpirationDate); // 10 hours in millis
 
 		// return it
 		return jwtAuthResponse;
