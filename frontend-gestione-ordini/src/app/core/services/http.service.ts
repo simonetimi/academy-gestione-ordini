@@ -12,6 +12,7 @@ export class HttpService {
   #token = '';
 
   baseUrl = 'http://localhost:8080';
+  headersWithToken = new HttpHeaders();
 
   constructor() {
     // prende il token dal local storage, se esiste
@@ -19,6 +20,10 @@ export class HttpService {
     if (stringifiedUser) {
       this.#token = JSON.parse(stringifiedUser).token;
     }
+    this.headersWithToken = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.#token}`,
+    });
   }
 
   setToken(token: string) {
@@ -71,107 +76,81 @@ export class HttpService {
   // products
 
   getAllproducts() {
-    return this.#httpClient.get<Product[]>(`${this.baseUrl}/products`);
+    return this.#httpClient.get<Product[]>(`${this.baseUrl}/products`,{
+      headers: this.headersWithToken
+    });
   }
 
   addProduct(product: Product) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.post<Product>(`${this.baseUrl}/products`, product, {
-      headers: headersWithToken,
+      headers: this.headersWithToken,
     });
   }
 
   removeProduct(productId: string) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.delete<string>(
       `${this.baseUrl}/products/${productId}`,
       {
-        headers: headersWithToken,
+        headers: this.headersWithToken,
       },
     );
   }
 
   updateProduct(product: Product) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.put<Product>(`${this.baseUrl}/products`, product, {
-      headers: headersWithToken,
+      headers: this.headersWithToken,
     });
   }
 
   // clients
 
   getAllClients() {
-    return this.#httpClient.get<Client[]>(`${this.baseUrl}/clients`);
+    return this.#httpClient.get<Client[]>(`${this.baseUrl}/clients`,{
+      headers: this.headersWithToken,
+    });
   }
 
   addClient(client: Client) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.post<Client>(`${this.baseUrl}/clients`, client, {
-      headers: headersWithToken,
+      headers: this.headersWithToken,
     });
   }
 
   removeClient(clientId: string) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.delete<string>(
       `${this.baseUrl}/client/${clientId}`,
       {
-        headers: headersWithToken,
+        headers: this.headersWithToken,
       },
     );
   }
 
   updateClient(client: Client) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.put<Client>(`${this.baseUrl}/clients`, client, {
-      headers: headersWithToken,
+      headers: this.headersWithToken,
     });
   }
 
   // orders
 
   getAllOrders() {
-    return this.#httpClient.get<Order[]>(`${this.baseUrl}/orders`);
+    return this.#httpClient.get<Order[]>(`${this.baseUrl}/orders`,{
+      headers: this.headersWithToken,
+    });
   }
 
   addOrder(order: OrderDTO) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.post<Order>(`${this.baseUrl}/orders`, order, {
-      headers: headersWithToken,
+      headers: this.headersWithToken,
     });
   }
 
   updateOrder(orderStateDto: OrderStateDto, orderId: string) {
-    const headersWithToken = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.#token}`,
-    });
     return this.#httpClient.put<Order>(
       `${this.baseUrl}/orders/${orderId}`,
       orderStateDto,
       {
-        headers: headersWithToken,
+        headers: this.headersWithToken,
       },
     );
   }
